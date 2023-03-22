@@ -1,0 +1,79 @@
+<ul class="comment-reply comment-reply-main">
+    <li>
+        <a (click)="comment()" class="comment-reply-link wpqa-reply-link" href="#">
+        <i class="icon-reply"></i>Responder</a>
+    </li>
+    <li *ngIf="type == 'answer' && isUserLogged && !object.best">
+        <a (click)="selectBestAnswer(true)" class="best_answer_a" href="#" title="Seleccione como mejor respuesta">
+            <i class="icon-check"></i>Mejor respuesta
+        </a>
+    </li>
+    <li *ngIf="type == 'answer' && isUserLogged && object.best">
+        <a (click)="selectBestAnswer(false)" class="best_answer_a" href="#" title=" Cancelar como mejor respuesta">
+            <i class="icon-cancel"></i>Cancelar mejor respuesta
+        </a>
+    </li>
+    <li class="clearfix last-item-answers"></li>
+</ul>
+<div id="showComment" *ngIf="showComment" class="comment-respond" style="display: block;">
+    <h3 class="section-title">Responder a {{ object.user.name + ' ' + object.user.lastName }}
+        <div class="wpqa-cancel-link cancel-comment-reply">
+            <a (click)="cancelComment()" id="cancel-comment-reply-link"
+               href="#">Cancelar respuesta.</a>
+        </div>
+    </h3>
+    <div class="page-layout carded inner-scroll" fxLayout="row wrap">
+        <form id="commentform" fxFlex [formGroup]="form" class="post-section comment-form answers-form"><p class="comment-login"> Logged in as <a
+            class="comment-login-login" href="#"><i
+            class="icon-user"></i>mjabascal@sitrans.transnet.cu</a>
+            <a class="comment-login-logout"
+               href="http://localhost/ask-travel/wp-login.php?action=logout&amp;redirect_to=http%3A%2F%2Flocalhost%2Fask-travel%2Fquestion%2Fis-this-statement-i-see-him-last-night-can-be-understood-as-i-saw-him-last-night%2F&amp;_wpnonce=43e8c187e8"
+               title="Log out of this account"><i
+                class="icon-logout"></i>Log out</a></p>
+
+            <div class="mt-12 mat-form-field-wrapper mat-form-field-appearance-outline">
+                <editor
+                    apiKey="r05la9o1xuik4lm49yvhq3y1ru5wc7iwrk1uwhngcfd38ffc"
+                    [formControl]="form.controls.description"
+                    class="mat-elevation-z1"
+                    [init]="{
+                    icons: 'material',
+                    skin: 'borderless',
+                    plugins: 'quickbars',
+                    menubar: 'false',
+                    branding: false,
+                    min_height: 100,
+                    language: 'es'
+                }">
+                </editor>
+
+            </div>
+
+            <button (click)="makeComment()" type="link" [disabled]="!form.valid" mat-raised-button color="accent" class="mt-24 submit-button button-default" aria-label="PUBLICAR SU PREGUNTA">
+                PUBLICAR SU PREGUNTA
+            </button>
+        </form>
+    </div>
+
+    <!--<form action="http://localhost/ask-travel/wp-comments-post.php" method="post" id="commentform"
+          class="post-section add-comments-form answers-form"><p class="add-comments-login"> Logged in as <a
+          class="add-comments-login-login" href="http://localhost/ask-travel/profile/mjabascalsitrans-transnet-cu/"><i
+          class="icon-user"></i>mjabascal@sitrans.transnet.cu</a>
+        <a class="add-comments-login-logout"
+                                                                   href="http://localhost/ask-travel/wp-login.php?action=logout&amp;redirect_to=http%3A%2F%2Flocalhost%2Fask-travel%2Fquestion%2Fis-this-statement-i-see-him-last-night-can-be-understood-as-i-saw-him-last-night%2F&amp;_wpnonce=43e8c187e8"
+                                                                   title="Log out of this account"><i
+        class="icon-logout"></i>Log out</a></p>
+        <div class="wpqa_error"></div>
+        <div class="form-input form-textarea form-add-comments-normal"><textarea id="add-comments" name="add-comments" rows="5"
+                                                                            class="form-control" aria-required="true"
+                                                                            placeholder="Reply"></textarea> <i
+            class="icon-pencil"></i></div>
+        <div class="clearfix"></div>
+        <p class="form-submit"><input name="submit" type="submit" id="submit"
+                                      class="button-default button-hide-click btn btn__primary" value="Submit"> <span
+            class="clearfix"></span> <span class="load_span"><span class="loader_2"></span></span> <input type="hidden"
+                                                                                                          name="comment_post_ID"
+                                                                                                          value="118"
+                                                                                                          id="comment_post_ID">
+            <input type="hidden" name="comment_parent" id="comment_parent" value="65"></p></form>-->
+</div>

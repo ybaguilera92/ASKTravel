@@ -1,0 +1,376 @@
+<div class="the-main-inner float_l">
+    <div class="breadcrumbs d-flex align-items-center justify-content-between breadcrumbs_1">
+        <div class="breadcrumbs-wrap d-flex align-items-center justify-content-between">
+            <div *ngIf="profile$ | async as profile" class="breadcrumb-left">
+                <span class="crumbs">
+                    <span class="breadcrumb-item" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+                        <span itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                            <meta itemprop="position" content="1">
+                            <a itemprop="item" [routerLink]="'/'" href="#" title="Home">
+                                <span itemprop="name">
+                                    <i class="icon-home font-xl mr-2"></i>Inicio
+                                </span>
+                            </a>
+                        </span>
+                        <span class="crumbs-span">/</span>
+                        <a (click)="changeMode('VIEW')" itemprop="item" href="#" title="profile">
+                            <span [ngClass]="{'current': mode == 'VIEW'}" itemprop="name">
+                                {{currentUser.displayName}}
+                            </span>
+                        </a>
+                        <span *ngIf="mode == 'EDIT'" class="crumbs-span">/</span>
+                        <span *ngIf="mode == 'EDIT'" class="current">{{'Editar perfil'}}</span>
+
+                    </span>
+                </span>
+            </div>
+            <!-- End breadcrumb-left -->
+            <div class="breadcrumb-right d-flex align-items-center">
+                <div class="question-navigation edit-profile">
+                    <a class="btn btn__sm btn__primary" (click)="changeMode('EDIT')" href="#">
+                        <i class="icon-pencil"></i>Editar perfil</a>
+                </div>
+                <div class="clearfix"></div>
+            </div><!-- End breadcrumb-right -->
+        </div><!-- End breadcrumbs-wrap -->
+    </div><!-- End breadcrumbs -->
+    <div class="clearfix"></div>
+    <div class="wrap-tabs">
+        <div class="menu-tabs active-menu">
+            <ul *ngIf="mode == 'VIEW'" class="menu flex menu-tabs-desktop navbar-nav navbar-secondary">
+                <li *ngFor="let tab of USERTABS" [ngClass]="{'active-tab' : type == tab.ARG}" class="menu-item ">
+                    <a (click)="actionTab(tab.ARG)">{{ tab.DESC}} </a>
+                </li>
+            </ul>
+            <ul *ngIf="mode == 'EDIT'" class="menu flex menu-tabs-desktop navbar-nav navbar-secondary">
+                <li *ngFor="let tab of PROFILETABS" [ngClass]="{'active-tab' : type == tab.ARG}" class="menu-item ">
+                    <a (click)="actionTab(tab.ARG)">{{ tab.DESC}} </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div *ngIf="mode == 'VIEW'" class="wpqa_hide mobile-tabs">
+        <span class="styled-select select-custom">
+            <select (change)="actionTab($event.target.value)" class="form-control home_categories">
+                <option *ngFor="let tab of USERTABS" [value]="tab.ARG" [selected]="{'selected' : type == tab.ARG}">
+                    {{ tab.DESC}}
+                </option>
+            </select>
+        </span>
+    </div>
+    <ng-container *ngIf="mode == 'VIEW'">
+        <div *ngIf="type == USERTABS[0].ARG" class="user-area-content page-not-following">
+            <div class="user-stats block-section-div stats-card">
+                <ul *ngIf="profile$ | async as profile"
+                    class="row row-warp row-boot list-unstyled mb-0 d-flex justify-content-between">
+                    <li class="col col-boot-sm-6 stats-card__item col4 user-questions">
+                        <div class="d-flex justify-content-between stats-card__item_div">
+                            <a class="stats-card__item_a"
+                                href="http://localhost/ask-travel/profile/root/questions/"></a>
+                            <i class="icon-book-open"></i>
+                            <div class="stats-card__item__text w-100">
+                                <span>{{ profile.questions }}</span>
+                                <h4>Preguntas</h4>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="col col-boot-sm-6 stats-card__item col4 user-answers">
+                        <div class="d-flex justify-content-between stats-card__item_div">
+                            <a class="stats-card__item_a" href="http://localhost/ask-travel/profile/root/answers/"></a>
+                            <i class="icon-comment"></i>
+                            <div class="stats-card__item__text w-100">
+                                <span>{{ profile.answers }}</span>
+                                <h4>Respuestas</h4>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="col col-boot-sm-6 stats-card__item col4 user-best-answers">
+                        <div class="d-flex justify-content-between stats-card__item_div">
+                            <a class="stats-card__item_a"
+                                href="http://localhost/ask-travel/profile/root/best-answers/"></a>
+                            <i class="icon-graduation-cap"></i>
+                            <div class="stats-card__item__text">
+                                <span>{{ profile.bestAnswers }}</span>
+                                <h4>Mejores Respuestas</h4>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div><!-- End user-stats -->
+        </div>
+        <section *ngIf="type == USERTABS[1].ARG || type == USERTABS[4].ARG" id="section-questions">
+            <h2 class="screen-reader-text">Viajero Pregunta Preguntas recientes</h2>
+            <infinite-scroll (scrolled)="onScroll()">
+                <div *ngIf="data$ | async as data" class="post-articles question-articles">
+                    <question-article *ngFor="let question of data['questions']" [question]="question" [type]="'list'">
+                    </question-article><!-- End article -->
+                </div><!-- End article-articles -->
+
+                <div class="pagination-wrap pagination-question">
+                    <div class="pagination-nav posts-load-more">
+                        <ng-container *ngIf="data$ | async as data">
+                            <span *ngIf="data['questions']?.length != data['totalItems']" [style.display]="'list-item'"
+                                class="load_span">
+                                <span class="loader_2"></span>
+                            </span>
+                        </ng-container>
+                        <ng-container *ngIf="data$ | async as data">
+                            <p *ngIf="data['questions']?.length == data['totalItems']" class="no-comments">No existen
+                                más
+                                preguntas</p>
+                        </ng-container>
+
+                    </div><!-- End pagination-nav -->
+                </div>
+            </infinite-scroll>
+        </section>
+        <div *ngIf="type == USERTABS[2].ARG || type == USERTABS[3].ARG" id="section-answers"
+            class="page-content commentslist section-page-div">
+            <infinite-scroll (scrolled)="onScroll()">
+                <div *ngIf="data$ | async as data">
+                    <ol class="commentlist clearfix">
+                        <li *ngFor="let answer of data['answers']"
+                            class="comment byuser comment-author-root bypostauthor thread-even depth-1 comment-with-title comment-with-title-1 not-activate-gender comment "
+                            id="li-comment-124">
+                            <div id="comment-124" class="comment-body clearfix">
+                                <div class="comment-question-title">
+                                    <header class="article-header">
+                                        <div class="question-header">
+                                            <div class="post-meta"><span class="post-date">Asked:<span
+                                                        class="date-separator"></span> <a
+                                                        href="http://localhost/ask-travel/index.php/question/why-are-the-british-confused-about-us-calling-bread-rolls-biscuits-when-they-call-bread-rolls-puddings/"><span
+                                                            class="entry-date published">April 19,
+                                                            2018</span></a></span><span class="byline"><span
+                                                        class="post-cat">In: <a
+                                                            href="http://localhost/ask-travel/index.php/question-category/language/"
+                                                            rel="tag">Language</a></span></span></div>
+                                        </div>
+                                    </header>
+                                    <div class="clearfix"></div>
+                                    <h2 class="post-title">
+                                        <a class="post-title"
+                                            href="http://localhost/ask-travel/index.php/question/why-are-the-british-confused-about-us-calling-bread-rolls-biscuits-when-they-call-bread-rolls-puddings/"
+                                            rel="bookmark">{{ answer.title }}
+                                        </a>
+                                    </h2>
+                                </div>
+                                <div class="comment-text">
+                                    <div class="d-flex align-items-center header-of-comment">
+                                        <div class="author-image author__avatar author-image-42"><a
+                                                href="http://localhost/ask-travel/profile/root/"><span
+                                                    class="author-image-span"><img
+                                                        class="avatar avatar-42 rounded-circle photo" alt="" title=""
+                                                        width="42" height="42"
+                                                        srcset="http://2.gravatar.com/avatar/2eb4c7aff50c9444b0ad9ec9de48e9bf?s=96&amp;d=mm&amp;r=g 1x, http://2.gravatar.com/avatar/2eb4c7aff50c9444b0ad9ec9de48e9bf?s=96&amp;d=mm&amp;r=g 2x"
+                                                        src="http://2.gravatar.com/avatar/2eb4c7aff50c9444b0ad9ec9de48e9bf?s=96&amp;d=mm&amp;r=g"></span></a>
+                                            <div class="author-image-pop-2 member-card" data-user="1">
+                                                <div class="author-pop-loader">
+                                                    <div class="loader_2"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="author clearfix">
+                                            <div class="comment-meta">
+                                                <div class="comment-author">
+                                                    <a href="http://localhost/ask-travel/profile/root/">
+                                                        Manuel </a>
+                                                </div>
+                                                <a href="http://localhost/ask-travel/index.php/question/why-are-the-british-confused-about-us-calling-bread-rolls-biscuits-when-they-call-bread-rolls-puddings/#comment-124"
+                                                    class="comment-date" itemprop="url">
+                                                    Added an answer on April 19, 2018 at 2:07 am </a>
+                                            </div><!-- End comment-meta -->
+                                        </div><!-- End author -->
+                                    </div><!-- End header-of-comment -->
+                                    <div class="text">
+
+                                        <div>
+                                            <p [innerHTML]="answer.description" class="less_answer_text">
+                                                <a class="post-read-more comment-read-more read_more_answer custom-post-link"
+                                                    href="http://localhost/ask-travel/index.php/question/why-are-the-british-confused-about-us-calling-bread-rolls-biscuits-when-they-call-bread-rolls-puddings/#comment-124"
+                                                    rel="bookmark" title="Read more">Read more</a></p>
+                                            <div class="full_answer_text wpqa_hide">
+                                                <p [innerHTML]="answer.description"></p>
+                                                <a class="read_less_answer custom-post-link" href="#">See less</a>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="clearfix"></div>
+                                    </div><!-- End text -->
+                                    <div class="clearfix"></div>
+                                </div><!-- End comment-text -->
+                            </div><!-- End comment-body -->
+                            <!-- End li -->
+                        </li>
+                    </ol>
+                </div><!-- End article-articles -->
+
+                <div class="pagination-wrap pagination-question">
+                    <div class="pagination-nav posts-load-more">
+                        <ng-container *ngIf="data$ | async as data">
+                            <span *ngIf="data['answers']?.length != data['totalItems']" [style.display]="'list-item'"
+                                class="load_span">
+                                <span class="loader_2"></span>
+                            </span>
+                        </ng-container>
+                        <ng-container *ngIf="data$ | async as data">
+                            <p *ngIf="data['answers']?.length == data['totalItems']" class="no-comments">No existen más
+                                respuestas</p>
+                        </ng-container>
+
+                    </div><!-- End pagination-nav -->
+                </div>
+            </infinite-scroll>
+        </div>
+        <!-- End user-area-content -->
+    </ng-container>
+    <div *ngIf="mode == 'EDIT'" class="wpqa_hide mobile-tabs">
+        <span class="styled-select select-custom">
+            <select (change)="actionTab($event.target.value)" class="form-control home_categories">
+                <option *ngFor="let tab of PROFILETABS" [value]="tab.ARG" [selected]="{'selected' : type == tab.ARG}">
+                    {{ tab.DESC}}
+                </option>
+            </select>
+        </span>
+    </div>
+    <ng-container *ngIf="mode == 'EDIT'">
+        <div *ngIf="type == PROFILETABS[0].ARG" class="user-area-content page-not-following">           
+                <form *ngIf="currentUser" class="edit-profile-form block-section-div wpqa_form wpqa-readonly change-password-ajax"
+                    method="post" enctype="multipart/form-data" [formGroup]="userForm" (ngSubmit)="saveProfile()">
+                    <div class="form-inputs clearfix">
+                        <div class="page-sections" id="edit-profile">
+                            <div class="page-section page-section-basic">
+                                <div class="page-wrap-content">
+                                    <h2 class="post-title-2"><i class="icon-vcard"></i>Información Básica</h2>
+                                    <p class="nickname_field">
+                                        <label for="nickname_50">Usuario<span class="required">*</span></label>
+                                        <input class="form-control" id="nickname_50" type="text"
+                                            value="" formControlName="username">
+                                          <mat-error *ngIf="userForm.get('username').hasError('required')">
+                                              Usuario es requerido
+                                          </mat-error>
+                                        <i class="icon-vcard"></i>
+                                    </p>
+                                    <p class="first_name_field">
+                                        <label for="first_name_50">Nombre</label>
+                                        <input class="form-control" id="first_name_50" type="text"
+                                            formControlName="name">
+                                             <mat-error *ngIf="userForm.get('name').hasError('required')">
+                                                 Nombre es requerido
+                                             </mat-error>
+                                           
+                                        <i class="icon-user"></i>
+                                    </p>
+                                    
+                                    <p class="last_name_field">
+                                        <label for="last_name_50">Apellido</label>
+                                        <input class="form-control" name="last_name" id="last_name_50" type="text"
+                                           formControlName="lastName">
+                                            <mat-error *ngIf="userForm.get('lastName').hasError('required')">
+                                                Apellidos son requeridos
+                                            </mat-error>
+                                        <i class="icon-users"></i>
+                                    </p>                                    
+                                    <div class="clearfix"></div>
+                                    <div class="author-image profile-image d-flex align-items-center mb-4">
+                                        <span class="author-image-span wpqa-delete-image-span uploded-img mr-4"><img
+                                                class="avatar avatar-100 photo" alt="Manuel" title="Manuel" width="100"
+                                                height="100"
+                                                srcset="{{imagenPrevia}}"
+                                               [src]="imagenPrevia"></span>
+                                    </div><label for="your_avatar_50">Imagen de Perfil</label>
+                                    <div class="fileinputs">
+                                        <input type="file" formControlName="file" name="your_avatar"
+                                            id="your_avatar_50" #fileInput id="fileUpload"
+                                            (change)="changeFile($event)">
+                                        <div class="fakefile">
+                                            <button type="button" name="upload"> {{valor_button}}</button>
+                                            <span>Cargar</span>
+                                        </div>
+                                        <i class="icon-camera"></i>                                         
+                                          <!-- Fetch selected filed on change -->
+                                         
+                                          <mat-error *ngIf="userForm.get('file').hasError('maxFileSize')" align="start">
+                                              El tamaño de la imágen debe ser menor a 10 MB.
+                                          </mat-error>
+                                          <mat-error *ngIf="userForm.get('file').hasError('typeError')" align="start">
+                                              El tipo de archivo no es válido.
+                                          </mat-error>
+                                    </div>
+                                   
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div><!-- End page-section -->
+                        </div><!-- End page-sections -->
+                        <input type="submit" value="Guardar"
+                            class="button-default button-hide-click login-submit submit" [disabled]="userForm.invalid">
+                    </div>
+                </form>           
+        </div>
+        <div *ngIf="type == PROFILETABS[1].ARG" class="user-area-content page-not-following">
+            <form class="edit-profile-form block-section-div wpqa_form wpqa-readonly change-password-ajax" method="post"
+                enctype="multipart/form-data" [formGroup]="passwordForm" (ngSubmit)="savePassword()">
+                <div class="form-inputs clearfix">
+                    <div class="page-sections" id="change-password">
+                        <div class="page-section">
+                            <div class="page-wrap-content">
+                                <h2 class="post-title-2"><i class="icon-lock"></i>Cambiar contraseña</h2>
+                                <p class="login-password">
+                                    <label for="newpassword_50">Nueva Contraseña<span class="required">*</span></label>
+                                    <input id="newpassword_50" class="form-control" type="password"
+                                        name="pass1" formControlName="password">
+                                         <mat-error *ngIf="passwordForm.get('password').hasError('required')">
+                                             Password es requerido
+                                         </mat-error>
+                                    <i class="icon-lock-open"></i>
+                                </p>
+                                
+                                <p class="login-password">
+                                    <label for="newpassword2_50">Confirmar Contraseña<span
+                                            class="required">*</span></label>
+                                    <input id="newpassword2_50" class="required-item form-control" type="password"
+                                        name="pass2" formControlName="rpassword">
+                                        
+                                    <i class="icon-lock-open"></i>
+                                </p>
+                            </div>
+                        </div><!-- End page-section -->
+                    </div><!-- End page-sections -->
+                    <input type="submit" value="Guardar" class="button-default button-hide-click login-submit submit">
+                </div>
+            </form>
+        </div>
+        <div *ngIf="type == PROFILETABS[2].ARG" class="user-area-content page-not-following">
+            <form class="edit-profile-form block-section-div wpqa_form wpqa-readonly change-password-ajax" method="post"
+                enctype="multipart/form-data" [formGroup]="emailForm" (ngSubmit)="saveEmail()" >
+                <div class="form-inputs clearfix">
+                    <div class="page-sections" id="change-password">
+                        <div class="page-section">
+                            <div class="page-wrap-content">
+                                <h2 class="post-title-2"><i class="icon-mail"></i>Cambiar correo electrónico</h2>
+                               
+
+                                <p class="login-password">
+                                    <label for="newpassword2_50">Correo electrónico<span
+                                            class="required">*</span></label>
+                                    <input id="email" class="required-item form-control" type="email"
+                                        formControlName="email"
+                                        name="email">
+                                         <mat-error *ngIf="emailForm.get('email').hasError('required')">
+                                             Correo es requerido
+                                         </mat-error>
+                                          <mat-error *ngIf="emailForm.get('email').hasError('email')">
+                                              Correo incorrecto
+                                          </mat-error>
+                                    <i class="icon-mail"></i>
+                                </p>
+                            </div>
+                        </div><!-- End page-section -->
+                    </div><!-- End page-sections -->
+                    <input type="submit" value="Guardar" class="button-default button-hide-click login-submit submit">
+                </div>
+            </form>
+        </div>
+        <!-- End user-area-content -->
+    </ng-container>
+</div>
+<div class="hide-main-inner"></div>

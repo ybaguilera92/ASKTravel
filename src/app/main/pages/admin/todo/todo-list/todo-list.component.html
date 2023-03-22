@@ -1,0 +1,21 @@
+<div *ngIf="todos.length === 0" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+    <span class="no-todos-text hint-text">No existen preguntas!</span>
+</div>
+<div *ngIf="loading" class="todo-list" ngxDroppable [model]="todos" (out)="onDrop($event)" [@animateStagger]="{value:'50'}">
+    <todo-list-item class="todo-list-item has-handle"
+                    *ngFor="let todo of todos" [todo]="todo"
+                    ngxDraggable
+                    [model]="todo"
+                    (click)="readTodo(todo.id)"
+                    [ngClass]="{'current-todo':todo?.id == currentTodo?.id}"
+                    matRipple
+                    [@animate]="{value:'*',params:{y:'100%'}}">
+    </todo-list-item>
+    <mat-paginator [length]="length"
+                   [pageIndex]="pageIndex"
+                   [pageSize]="10"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="pageEvent = getServerData($event)"
+                   aria-label="Select page">
+    </mat-paginator>
+</div>

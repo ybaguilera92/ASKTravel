@@ -1,0 +1,17 @@
+<div class="viewer-wrapper mat-card mat-elevation-z2">
+
+    <div class="viewer-header">
+
+        <div class="viewer-title">{{data.title}}</div>
+    </div>
+
+    <div class="viewer-body">
+        <div mat-dialog-content>{{confirmMessage}}</div>
+    </div>
+
+    <div mat-dialog-actions class="pt-24">
+        <button mat-raised-button class="mat-accent mr-16" (click)="dialogRef.close(true)">Confirm</button>
+        <button mat-button (click)="dialogRef.close(false)">Cancel</button>
+    </div>
+</div>
+

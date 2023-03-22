@@ -1,0 +1,27 @@
+<div id="account-activation" fxLayout="column">
+
+    <div id="account-activation-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
+
+        <div id="account-activation-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+
+            <div class="logo">
+                <mat-icon class="mat-accent s-96">email</mat-icon>
+            </div>
+
+            <div class="title">Dirección de correo electrónico confirmada!</div>
+
+            <div class="subtitle">
+                <p>
+                   Su direccion de correo electrónico ha sido confirmada, ya forma parte de la comunidad de Viajando Preguntas.
+                </p>
+            </div>
+
+            <div class="message">
+                <a class="link" [routerLink]="'/auth/login'">Volver a la página de inicio de sesión</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,33 @@
+button,
+input[type=email],
+input[type=tel],
+input[type=text],
+input[type=password],
+input[type=image],
+input[type=submit],
+input[type=button],
+input[type=search],
+textarea {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-end, .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-gap, .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-start {
+    border-width: 1px!important;
+    transition: border-color .3s cubic-bezier(.25,.8,.25,1);
+}
+.mat-form-field-appearance-outline .mat-form-field-infix{
+    padding: 0.5em 0!important;
+}
+.mat-form-field-appearance-outline .mat-form-field-prefix, .mat-form-field-appearance-outline .mat-form-field-suffix{
+    top: 0!important;
+}
+.mat-form-field-appearance-outline .mat-form-field-label {
+    margin-top: -0.75em!important;
+}
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, .mat-form-field-appearance-outline.mat-form-field-can-float .mat-input-server:focus + .mat-form-field-label-wrapper .mat-form-field-label {
+    -webkit-transform: translateY(-1.09355em) scale(0.75)!important;
+    transform: translateY(-1.09355em) scale(0.75)!important;
+}

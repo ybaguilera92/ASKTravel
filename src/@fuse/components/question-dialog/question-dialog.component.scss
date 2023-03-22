@@ -1,0 +1,54 @@
+    .cdk-overlay-pane{
+        width: 690px;
+    }
+
+    .mat-dialog-title {
+        text-align: center;
+    }
+
+    .mat-dialog-actions {
+        padding: 20px 0 !important;
+        justify-content: center;
+    }
+
+    .submit-button{
+        width: 220px;
+        margin: 16px auto;
+        display: block;
+        background-color: var(--app-color-primary-light)!important;
+        padding: 11px 12px 12px;
+        cursor: pointer;
+    }
+
+    .mat-standard-chip .mat-chip-remove.mat-icon, .mat-standard-chip .mat-chip-remove .mat-icon {
+        width: 18px!important;
+        height: 18px!important;
+        font-size: 18px!important;
+    }
+
+    .mat-standard-chip .mat-chip-remove {
+        border: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        padding: 0;
+        background: none;
+    }
+
+    .mat-form-field {
+        font-family: "Roboto", Arial, sans-serif;
+    }
+
+    .mat-chip {
+        font-weight: 400!important;
+    }
+
+    #fileUpload {
+        position: absolute;
+        z-index: 9;
+        opacity: 0;
+        height: 100%;
+        width: 100%;
+        left: 0px;
+        top: 0px;
+        cursor: pointer;
+    }

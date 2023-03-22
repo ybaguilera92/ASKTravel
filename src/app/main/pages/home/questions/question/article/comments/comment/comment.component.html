@@ -1,0 +1,41 @@
+<div id="{{ 'comment-'+ comment.id }}" class="comment-body clearfix">
+    <div class="comment-text">
+        <div class="author-image author__avatar author-image-42">
+            <a title="" href="https://2code.info/">
+                    <span class="author-image-span">
+                      <img class="avatar avatar-42 photo" alt="" title="" width="42" height="42"
+                           src="./assets/images/user2.png">
+                    </span>
+            </a>
+        </div>
+        <div class="author clearfix">
+            <div class="comment-meta">
+                <div class="comment-author">
+                      <span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+                        <a itemprop="url" href="https://2code.info/">
+                          <span itemprop="name">{{ comment.user.name + ' ' + comment.user.lastName }}</span>
+                        </a>
+                      </span>
+                </div>
+                <a href="http://localhost/ask-travel/question/is-this-statement-i-see-him-last-night-can-be-understood-as-i-saw-him-last-night/#comment-64"
+                   class="comment-date" itemprop="url">
+                    <span class="discy_hide" itemprop="dateCreated">{{ comment.createdDate  | date:'short' }}</span>Respuesta
+                    añadida {{ comment.createdDate  | date:'medium' }}
+                </a>
+            </div>
+            <!-- End add-comments-meta -->
+        </div>
+        <!-- End author -->
+        <div class="text">
+            <div *ngIf="comment" [innerHTML]="comment.content" itemprop="text"></div>
+            <div class="clearfix"></div>
+            <div class="clearfix"></div>
+            <div class="wpqa_error"></div>
+            <reaction [type]="objectType" [object]="comment" [template]="templateType"></reaction>
+            <reply [type]="objectType" [object]="comment"></reply>
+        </div>
+        <!-- End text -->
+        <div class="clearfix"></div>
+    </div>
+    <!-- End add-comments-text -->
+</div>

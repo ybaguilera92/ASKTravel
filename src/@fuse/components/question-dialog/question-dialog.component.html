@@ -1,0 +1,134 @@
+<div class="mt-24 page-layout carded inner-scroll" fxLayout="row wrap">
+    <form fusePerfectScrollbar fxFlex [formGroup]="form" class="example-form">
+        <div mt-8 fxFlex="50" fxFlex.lt-md="100" fxLayout="column">
+            <mat-form-field style="width:100%" class="example-full-width" appearance="outline">
+                <mat-label>Título de la pregunta</mat-label>
+                <input matInput formControlName="title" maxlength="256">
+                <mat-hint *ngIf="!form.get('title').hasError('required')" align="start">
+                    Elija un título apropiado para la pregunta para que pueda responderse fácilmente.
+                </mat-hint>
+                <mat-error *ngIf="form.get('title').hasError('required')">
+                    El título de la pregunta es requerido
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="mt-12" fxFlex="50" fxFlex.lt-md="100" fxLayout="column">
+            <mat-form-field style="width:100%" class="example-full-width" appearance="outline">
+                <mat-label>Categoría</mat-label>
+                <mat-select  [placeholder]="'Seleccione ...'"
+                             formControlName="category">
+                    <mat-option *ngFor="let cat of categories" [value]="cat">
+                        {{cat.tablaDescription}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="!form.get('category').hasError('required')" align="start">
+                    Elija la sección adecuada para que la pregunta se pueda buscar fácilmente.
+                </mat-hint>
+                <mat-error *ngIf="form.get('category').hasError('required')">
+                    Debe escoger una categoría
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="mt-12" fxFlex="50" fxFlex.lt-md="100" fxLayout="column">
+            <mat-form-field style="width:100%" class="example-full-width" appearance="outline">
+                <mat-chip-list #chipList
+                               formControlName="tags"
+                               aria-label="Selección de Etiquetas">
+                    <mat-chip *ngFor="let tag of tags"
+                        (removed)="remove(tag)">
+                        {{tag.tablaDescription}}
+                        <button matChipRemove>
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip>
+                    <input
+                        placeholder="Nueva etiqueta..."
+                        #tagInput
+                        formControlName="tag"
+                        [matAutocomplete]="auto"
+                        [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                    <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+                        {{tag.tablaDescription}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-hint *ngIf="!form.get('tags').hasError('required')" align="start">
+                    Elija palabras clave adecuadas, por ejemplo: pregunta, encuesta.
+                </mat-hint>
+                <mat-error *ngIf="form.get('tags').hasError('required')">
+                    Debe escoger o crear al menos una etiqueta
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="mt-12" fxFlex="50" fxFlex.lt-md="100" fxLayout="column">
+            <mat-form-field style="width:100%" class="example-full-width" appearance="outline">
+                <mat-label>Imágen destacada</mat-label>
+                <!-- Readonly Input to show File names -->
+                <input matInput  formControlName="file" readonly name="memberContactNo" /> 
+                <mat-hint *ngIf="!form.get('file').hasError('maxFileSize')"  align="start">
+                    Puede subir una imágen que represente con su problema o duda.
+                </mat-hint>
+                <!-- Fetch selected filed on change -->
+                <input type="file" formControlName="fileUp" #fileInput id="fileUpload" (change)="changeFile($event)" name="fileUpload" accept="image/*" />
+                <mat-error *ngIf="form.get('file').hasError('maxFileSize')" align="start">
+                    El tamaño de la imágen debe ser menor a 10 MB.
+                </mat-error>
+                <mat-error *ngIf="form.get('file').hasError('typeError')" align="start">
+                    El tipo de archivo no es válido.
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <!--<div class="mt-12" fxFlex="50" fxFlex.lt-md="100" fxLayout="column">
+            <mat-form-field style="width:100%" class="example-full-width" appearance="outline">
+                <mat-label>Detalles</mat-label>
+                <textarea matInput
+                           formControlName="description"
+                           cdkTextareaAutosize
+                           #autosize="cdkTextareaAutosize"
+                           matAutosizeMinRows="1"
+                           matAutosizeMinRows="3"></textarea>
+                <mat-hint *ngIf="!form.get('description').hasError('required')" align="start">
+                    Escriba la descripción minuciosamente y en detalles.
+                </mat-hint>
+                <mat-error *ngIf="form.get('description').hasError('required')">
+                    La descripción de la pregunta es requerida
+                </mat-error>
+            </mat-form-field>
+        </div>-->
+        <div class="mt-12 mat-form-field-wrapper mat-form-field-appearance-outline">
+            <editor
+                apiKey="r05la9o1xuik4lm49yvhq3y1ru5wc7iwrk1uwhngcfd38ffc"
+                [formControl]="form.controls.description"
+                class="mat-elevation-z1"
+                [init]="{
+                    icons: 'material',
+                    skin: 'borderless',
+                    plugins: 'quickbars',
+                    menubar: 'false',
+                    branding: false,
+                    min_height: 100,
+                    language: 'es'
+                }">
+            </editor>
+            <div class="mat-form-field-flex">
+                <mat-hint *ngIf="!form.get('description').hasError('required') || form.get('description').untouched" align="start">
+                    Escriba la descripción minuciosamente y en detalles.
+                </mat-hint>
+                <mat-error *ngIf="form.get('description').hasError('required') && form.get('description').touched">
+                    La descripción de la pregunta es requerida
+                </mat-error>
+            </div>
+        </div>
+
+        <button (click)="makeQuestion()" [disabled]="!form.valid" mat-raised-button color="accent" class="mt-24 submit-button button-default" aria-label="PUBLICAR SU PREGUNTA">
+            PUBLICAR SU PREGUNTA
+        </button>
+    </form>
+</div>

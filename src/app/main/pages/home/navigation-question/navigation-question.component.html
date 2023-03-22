@@ -1,0 +1,74 @@
+<div class="the-main-inner float_l">
+    <div class="clearfix"></div>
+    <div id="row-tabs-home" class="row row-warp row-tabs">
+        <div class="col col12">
+            <div class="wrap-tabs">
+                <div class="menu-tabs active-menu">
+                    <ul class="menu flex menu-tabs-desktop">
+                        <li [ngClass]="{'active-tab' : type == NAVIGATION.RECENT_QUESTIONS}">
+                            <a (click)="goTo(NAVIGATION.RECENT_QUESTIONS)">
+                                Preguntas recientes
+                            </a>
+                        </li>
+                        <li [ngClass]="{'active-tab' : type == NAVIGATION.MOST_ANSWERED}">
+                            <a (click)="goTo(NAVIGATION.MOST_ANSWERED)">
+                                Más respondidas
+                            </a>
+                        </li>
+                        <li [ngClass]="{'active-tab' : type == NAVIGATION.MOST_VISITED}">
+                            <a (click)="goTo(NAVIGATION.MOST_VISITED)">
+                                Más visitadas
+                            </a>
+                        </li>
+                        <li [ngClass]="{'active-tab' : type == NAVIGATION.MOST_VOTED}">
+                            <a (click)="goTo(NAVIGATION.MOST_VOTED)">
+                                Más votadas
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="discy_hide mobile-tabs"><span class="styled-select"><select class="home_categories">					<option
+                        value="http://localhost/ask-travel/?show=recent-questions">
+				Recent Questions					</option>
+									<option selected="selected" value="http://localhost/ask-travel/?show=most-answered">
+				Most Answered					</option>
+									<option value="http://localhost/ask-travel/?show=question-bump">
+				Bump Question					</option>
+									<option value="http://localhost/ask-travel/?show=answers">
+				Answers					</option>
+									<option value="http://localhost/ask-travel/?show=most-visited">
+				Most Visited					</option>
+									<option value="http://localhost/ask-travel/?show=most-voted">
+				Most Voted					</option>
+									<option value="http://localhost/ask-travel/?show=no-answers">
+				No Answers					</option>
+				</select></span></div>
+                </div>
+            </div><!-- End wrap-tabs -->
+        </div><!-- End col9 -->
+    </div><!-- End row -->
+
+    <section>
+        <h2 class="screen-reader-text">Viajero Pregunta Preguntas recientes</h2>
+        <infinite-scroll (scrolled)="onScroll()">
+            <div *ngIf="data$ | async as data" class="post-articles question-articles">
+                <question-article *ngFor="let question of data['questions']" [question]="question" [type]="'list'">
+                </question-article><!-- End article -->
+            </div><!-- End article-articles -->
+
+            <div class="pagination-wrap pagination-question">
+                <div class="pagination-nav posts-load-more">
+                    <ng-container *ngIf="data$ | async as data">
+                        <span *ngIf="data['questions']?.length != data['totalItems']" [style.display]="'list-item'" class="load_span">
+                            <span class="loader_2"></span>
+                        </span>
+                    </ng-container>
+                    <ng-container *ngIf="data$ | async as data">
+                        <p *ngIf="data['questions']?.length == data['totalItems']" class="no-comments">No existen más preguntas</p>
+                    </ng-container>
+
+                </div><!-- End pagination-nav -->
+            </div>
+        </infinite-scroll>
+    </section><!-- End section -->
+
+</div>

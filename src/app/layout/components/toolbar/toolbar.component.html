@@ -1,0 +1,379 @@
+<div class="hidden-header header-dark mobile_bar_active">
+    <header class="header" itemscope="" itemtype="https://schema.org/WPHeader">
+        <div class="the-main-container">
+            <div class="mobile-menu">
+                <div class="mobile-menu-click" mat-button [matMenuTriggerFor]="menu2">
+                    <i class="icon-menu"></i>
+                    <mat-menu #menu2="matMenu">
+                        <ul>
+                            <li id="menu-item-75"
+                                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-64 current_page_item menu-item-75">
+                                <a class="" [routerLink]="'/'" href="#">Inicio</a></li>
+                            <li id="menu-item-76"
+                                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-76"><a
+                                    class="" href="#" [routerLink]="'/content'">Sobre Nosotros</a></li>
+                            <li id="menu-item-76"
+                                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-76">
+                                <a target="_self" class="wpqa-question" (click)="makeQuestion()">
+                                    <i class="icon-help-circled">
+                                    </i>Preguntar</a></li>
+                        </ul>
+                    </mat-menu>
+                </div>
+            </div><!-- End mobile-menu -->
+            <div *ngIf="!currentUser" class="right-header float_r">
+                <a class="sign-in-lock mob-sign-in" (click)="goToSign('in')" data-toggle=" modal"><i
+                        class="icon-lock"></i></a>
+                <a class="button-default button-sign-in" (click)="goToSign('in')" data-toggle="modal">Acceso</a>
+                <a class="button-default-2 button-sign-up" (click)="goToSign('up')" data-toggle="modal">Registro</a>
+            </div><!-- End right-header -->
+            <div *ngIf="currentUser" class="right-header float_r">
+                <div class="user-login-area">
+
+                    <div mat-button [matMenuTriggerFor]="menu" class="user-login-click float_r user-click-open">
+                        <span class="user-click"></span>
+                        <div class="user-image float_l">
+                            <img *ngIf="imagenExiste" class="avatar-29 photo" alt="{{currentUser.username}}" title="{{currentUser.username}}"
+                                width="29" height="29" [src]="image">
+                            <img *ngIf="!imagenExiste" class="avatar-29 photo" alt="{{currentUser.username}}"
+                                title="{{currentUser.username}}"
+                                width="29" height="29" src="./assets/images/user2.png">
+                        </div>
+                        <div class="user-login float_l">
+                            <span>Bienvenido</span><br>
+                            <div class="float_l">{{currentUser.fullName}}</div>
+                        </div>
+                        <i class="icon-down-open-mini"></i>
+                        <mat-menu #menu="matMenu">
+                            <ul>
+                                <li>
+                                    <a [routerLink]="['/profile', this.currentUser.id]">
+                                        <i class="icon-user"></i>
+                                        Perfil de Usuario
+                                    </a>
+                                </li>
+                                <li><a [routerLink]="['/profile',currentUser.id]" [queryParams]="{type: 'edit'}"
+                                        href="#"><i class="icon-pencil"></i>Editar Perfil</a></li>
+                                 <li><a routerLink="/admin/users"
+                                         href="#"><i class="icon-pencil"></i>Menú Administración</a></li>
+
+                                <li><a (click)="logout()"><i class="icon-logout"></i>Desconectarse</a></li>
+                            </ul>
+                        </mat-menu>
+
+                    </div><!-- End user-login-click -->
+                </div><!-- End user-login-area -->
+            </div>
+            <div class="left-header float_l">
+                <h2 class="screen-reader-text site_logo">Viajando Preguntas</h2>
+                <a class="logo float_l logo-img" [routerLink]="'/'" title="Viajero Pregunta">
+                    <img title="Viajero Pregunta" class="default_screen" alt="Viajero Pregunta Logo"
+                        src="assets/images/logos/logo-new-white.png">
+                    <img title="Viajero Pregunta" class="retina_screen" alt="Viajero Pregunta Logo"
+                        src="assets/images/logos/logo-new-white.png">
+                </a>
+                <div class="mid-header float_l">
+                    <div class="header-search float_r">
+                        <form role="search" class="searchform main-search-form" [formGroup]="searchForm" method="get">
+                            <div class="search-wrapper" fxLayout="row" fxLayoutAlign="start center">
+                                <input formControlName="search" type="search" class="live-search live-search-icon"
+                                    autocomplete="off" name="search" (keydown.enter)="findAnswersOnEnter($event)"
+                                    [(ngModel)]="question" placeholder="Buscar preguntas..." fxFlex>
+                                <div *ngIf="questions | withLoading | async as obs">
+                                    <button type="button" (click)="clear()" *ngIf="question != '' && !obs.loading">
+                                        <i class="icon-cancel"></i>
+                                    </button>
+                                    <button type="button" *ngIf=" question == ''">
+                                        <i class="icon-search"></i>
+                                    </button>
+                                    <button [style.display]=" this.question != '' && obs.loading ? 'list-item' : 'none'"
+                                        class="li_loader">
+                                        <span style="border-color: white;" class="loader_3 fa-spin"></span>
+                                    </button>
+                                    <ng-template [ngIf]="checkData(obs.data) && question != ''">
+                                        <div class="search-results">
+                                            <div class="result-div">
+                                                <ul class="list-unstyled mb-0 results-list">
+                                                    <li *ngFor="let question of obs.data.questions">
+                                                        <a (click)="clear()"
+                                                            [innerHTML]="question.title | bold:searchForm.get('search').value"
+                                                            [routerLink]="'/question/'+ question.id"
+                                                            style="cursor: pointer" href="#"></a>
+                                                    </li>
+                                                    <li *ngIf="obs.data.viewMore">
+                                                        <a (click)="clear()"
+                                                            [routerLink]="['questions', obs.data.viewMore, question]"
+                                                            style="cursor: pointer" href="#">Ver todos los
+                                                            resultados</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template
+                                        [ngIf]="!checkData(obs.data) && obs.type == 'finish' && this.question != ''">
+                                        <div class="search-results">
+                                            <div class="result-div">
+                                                <ul class="list-unstyled mb-0 results-list">
+                                                    <li>
+                                                        <a style="cursor: none" href="#">No se encontraron
+                                                            coincidencias</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </form>
+                    </div><!-- End header-search -->
+                    <nav class="nav float_l" itemscope="" itemtype="https://schema.org/SiteNavigationElement">
+                        <h3 class="screen-reader-text">Viajero Pregunta Navigation</h3>
+                        <ul id="menu-header" class="menu">
+                            <li id="menu-item-75"
+                                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-64 current_page_item menu-item-75">
+                                <a class="" [routerLink]="'/'" href="#">Inicio</a></li>
+                            <li id="menu-item-76"
+                                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-76"><a
+                                    class="" (click)="gotoContent()" >Sobre Nosotros</a></li>
+
+                        </ul>
+                    </nav><!-- End nav -->
+                </div><!-- End mid-header -->
+            </div><!-- End left-header -->
+        </div><!-- End the-main-container -->
+    </header><!-- End header -->
+    <div class="mobile-bar main-mobile-bar">
+        <div class="the-main-container">
+            <div class="mobile-bar-content">
+                <div class="the-main-container">
+                    <div class="mobile-bar-search">
+                        <form role="search" [formGroup]="searchForm" method="get">
+
+                            <input formControlName="search" type="search" class="live-search live-search-icon"
+                                autocomplete="off" name="search" (keydown.enter)="findAnswersOnEnter($event)"
+                                [(ngModel)]="question" placeholder="Buscar preguntas..." fxFlex>
+                            <div *ngIf="questions | withLoading | async as obs">
+                                <button type="button" (click)="clear()" *ngIf="question != '' && !obs.loading" style="margin-right: 10px;">
+                                    <i class="icon-cancel"></i>
+                                </button>
+                                <button type="button" *ngIf=" question == ''" style="margin-right: 10px;">
+                                    <i class="icon-search"></i>
+                                </button>
+                                <button [style.display]=" this.question != '' && obs.loading ? 'list-item' : 'none'"
+                                    class="li_loader">
+                                    <span style="border-color: white;" class="loader_3 fa-spin"></span>
+                                </button>
+                                <ng-template [ngIf]="checkData(obs.data) && question != ''">
+                                    <div class="search-results">
+                                        <div class="result-div">
+                                            <ul class="list-unstyled mb-0 results-list">
+                                                <li *ngFor="let question of obs.data.questions">
+                                                    <a (click)="clear()"
+                                                        [innerHTML]="question.title | bold:searchForm.get('search').value"
+                                                        [routerLink]="'/question/'+ question.id" style="cursor: pointer"
+                                                        href="#"></a>
+                                                </li>
+                                                <li *ngIf="obs.data.viewMore">
+                                                    <a (click)="clear()"
+                                                        [routerLink]="['questions', obs.data.viewMore, question]"
+                                                        style="cursor: pointer" href="#">Ver todos los
+                                                        resultados</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template
+                                    [ngIf]="!checkData(obs.data) && obs.type == 'finish' && this.question != ''">
+                                    <div class="search-results">
+                                        <div class="result-div">
+                                            <ul class="list-unstyled mb-0 results-list">
+                                                <li>
+                                                    <a style="cursor: none" href="#">No se encontraron
+                                                        coincidencias</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+
+                        </form>
+                    </div>
+                    
+                </div><!-- End the-main-container -->
+            </div><!-- End mobile-bar-content -->
+        </div><!-- End the-main-container -->
+    </div><!-- End mobile-bar -->
+</div>
+<aside class="mobile-aside mobile-menu-main mobile-menu-wrap gray-mobile-menu" data-menu="mobile-menu-main">
+    <h3 class="screen-reader-text">Mobile menu</h3>
+    <div class="mobile-aside-inner mCustomScrollbar _mCS_1 mCS_no_scrollbar">
+        <div id="mCSB_1" class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" style="max-height: none;"
+            tabindex="0">
+            <div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y"
+                style="position:relative; top:0; left:0;" dir="ltr">
+                <div class="mobile-aside-inner-inner">
+                    <a href="#" class="mobile-aside-close"><i class="icon-cancel"></i><span
+                            class="screen-reader-text">Close</span></a>
+                    <div class="mobile-menu-top mobile--top">
+                        <div class="widget widget_ask">
+                            <a href="http://localhost/ask-travel/add-question/" class="button-default wpqa-question">Ask
+                                a Question</a>
+                        </div>
+                    </div><!-- End mobile-menu-top -->
+                    <ul id="nav_menu" class="menu">
+                        <li id="menu-item-80"
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-64 current_page_item menu-item-80">
+                            <a class="" href="http://localhost/ask-travel/">Home</a></li>
+                        <li id="menu-item-81"
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-81"><a class=""
+                                href="http://localhost/ask-travel/about-us/">About
+                                Us</a></li>
+                        <li id="menu-item-82"
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-82"><a class=""
+                                href="http://localhost/ask-travel/blog/">Blog</a>
+                        </li>
+                        <li id="menu-item-84"
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-84"><a class=""
+                                href="http://localhost/ask-travel/contact-us/">Contact
+                                Us</a></li>
+                    </ul>
+                    <div class="mobile--top post-search">
+                        <form role="search" class="searchform main-search-form" [formGroup]="searchForm" method="get">
+                            <div class="search-wrapper" fxLayout="row" fxLayoutAlign="start center">
+                                <input formControlName="search" type="search" class="live-search live-search-icon"
+                                    autocomplete="off" name="search" (keydown.enter)="findAnswersOnEnter($event)"
+                                    [(ngModel)]="question" placeholder="Buscar preguntas..." fxFlex>
+                                <div *ngIf="questions | withLoading | async as obs">
+                                    <button type="button" (click)="clear()" *ngIf="question != '' && !obs.loading">
+                                        <i class="icon-cancel"></i>
+                                    </button>
+                                    <button type="button" *ngIf=" question == ''">
+                                        <i class="icon-search"></i>
+                                    </button>
+                                    <button [style.display]=" this.question != '' && obs.loading ? 'list-item' : 'none'"
+                                        class="li_loader">
+                                        <span style="border-color: white;" class="loader_3 fa-spin"></span>
+                                    </button>
+                                    <ng-template [ngIf]="checkData(obs.data) && question != ''">
+                                        <div class="search-results">
+                                            <div class="result-div">
+                                                <ul class="list-unstyled mb-0 results-list">
+                                                    <li *ngFor="let question of obs.data.questions">
+                                                        <a (click)="clear()"
+                                                            [innerHTML]="question.title | bold:searchForm.get('search').value"
+                                                            [routerLink]="'/question/'+ question.id"
+                                                            style="cursor: pointer" href="#"></a>
+                                                    </li>
+                                                    <li *ngIf="obs.data.viewMore">
+                                                        <a (click)="clear()"
+                                                            [routerLink]="['questions', obs.data.viewMore, question]"
+                                                            style="cursor: pointer" href="#">Ver todos los
+                                                            resultados</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template
+                                        [ngIf]="!checkData(obs.data) && obs.type == 'finish' && this.question != ''">
+                                        <div class="search-results">
+                                            <div class="result-div">
+                                                <ul class="list-unstyled mb-0 results-list">
+                                                    <li>
+                                                        <a style="cursor: none" href="#">No se encontraron
+                                                            coincidencias</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- End mobile-aside-inner-inner -->
+            </div>
+            <div id="mCSB_1_scrollbar_vertical"
+                class="mCSB_scrollTools mCSB_1_scrollbar mCS-light mCSB_scrollTools_vertical" style="display: none;">
+                <div class="mCSB_draggerContainer">
+                    <div id="mCSB_1_dragger_vertical" class="mCSB_dragger"
+                        style="position: absolute; min-height: 30px; top: 0px;">
+                        <div class="mCSB_dragger_bar" style="line-height: 30px;"></div>
+                        <div class="mCSB_draggerRail"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- End mobile-aside-inner -->
+</aside>
+<ng-container *ngIf="_router.url.indexOf('/profile') > -1">
+    <div *ngIf="profile$ | async as profile" class="wpqa-profile-cover wpqa-profile-cover-only">
+        <div>
+            <div class="wpqa-cover-background">
+                <div class="cover-opacity"></div>
+                <div class="wpqa-cover-inner the-main-container container-boot">
+                    <div class="wpqa-cover-content">
+                        <div class="post-section user-area user-advanced user-cover">
+                            <div class="post-inner">
+                                <div class="user-head-area">
+                                    <div *ngIf="imagenExiste" class="author-image author__avatar author-image-84"><a
+                                            href="#"><span
+                                                class="author-image-span"><img
+                                                    class="avatar avatar-84 rounded-circle photo" alt="" title=""
+                                                    width="84" height="84" [src]="image"></span></a>
+                                    </div>
+                                    <div *ngIf="!imagenExiste" class="author-image author__avatar author-image-84"><a
+                                            href="#"><span
+                                                class="author-image-span"><img
+                                                    class="avatar avatar-84 rounded-circle photo" alt="" title=""
+                                                    width="84" height="84" src="./assets/images/user2.png"></span></a>
+                                    </div>
+                                </div>
+                                <div class="user-content">
+                                    <div class="user-inner">
+                                        <h4><a
+                                                href="#">{{currentUser.displayName}}</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wpqa-cover-right">
+
+                            <div class="empty-cover-div"></div>
+                            <div class="wpqa-cover-buttons wpqa-cover-followers"><i class="icon-users"></i><span
+                                    class="cover-count follow-cover-count">{{profile.questions}} </span>Seguidores
+                            </div>
+                            <div><a class="wpqa-cover-buttons wpqa-cover-questions"
+                                    ><i
+                                        class="icon-book-open"></i><span
+                                        class="cover-count">{{ profile.questions }}</span>Preguntas</a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<div *ngIf="!currentUser" class="call-action-unlogged call-action-dark call-action-style_1">
+    <div class="call-action-opacity"></div>
+    <div class="the-main-container">
+        <div class="call-action-wrap">
+            <div class="col6">
+                <h3>¡Comparte y haz crecer el conocimiento del mundo!</h3>
+                <p>Queremos conectar a las personas que tienen conocimiento con las personas que lo necesitan, reunir a
+                    personas con diferentes perspectivas para que puedan entenderse mejor y capacitar a todos para que
+                    compartan su conocimiento.</p>
+            </div>
+            <div class="col3">
+            </div>
+        </div>
+    </div><!-- End the-main-container -->
+</div>
+<div id="pixel-to-watch"></div>

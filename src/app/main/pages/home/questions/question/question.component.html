@@ -1,0 +1,44 @@
+<div *ngIf="question" class="the-main-inner float_l">
+    <div class="breadcrumbs d-flex align-items-center justify-content-between breadcrumbs_1">
+        <div class="breadcrumbs-wrap d-flex align-items-center justify-content-between">
+            <div class="breadcrumb-left">
+                <span class="crumbs">
+                    <span class="breadcrumb-item" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+                        <span itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+			                <meta itemprop="position" content="1">
+                            <a itemprop="item" [routerLink]="'/'" title="Inicio">
+                                <span itemprop="name">
+                                    <i class="icon-home font-xl mr-2"></i>Inicio
+                                </span>
+                            </a>
+                        </span>
+                        <span class="crumbs-span">/</span>
+                        <span class="current" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+			                <meta itemprop="position" content="2">
+                            <a itemprop="item" [routerLink] ="'/questions'" title="Preguntas">
+                                <span itemprop="name">Preguntas</span>
+                            </a>
+                        </span>
+                        <span class="crumbs-span">/</span>
+                        <span class="current">{{question.title}}</span>
+                    </span>
+						</span></div><!-- End breadcrumb-left -->
+            <div class="breadcrumb-right d-flex align-items-center">
+                <div class="question-navigation breadcrumb-navs d-flex">
+                    <a style="cursor: pointer" [class.disabled]="disableNavigation(currentItem.next)" (click)="questionNextNavigation()" class="nav-next breadcrumb-navs__item mr-1"><span>Próxima</span>
+                        <i class="icon-right-open"></i></a>
+                    <a style="cursor: pointer" [class.disabled]="disableNavigation(currentItem.prev)" (click)="questionPrevNavigation()" class="nav-previous breadcrumb-navs__item">
+                        <i class="icon-left-open"></i></a>
+                </div><!-- End page-navigation -->
+                <div class="question-stats">
+                </div><!-- End question-stats -->
+                <div class="clearfix"></div>
+            </div><!-- End breadcrumb-right --></div><!-- End breadcrumbs-wrap --></div><!-- End breadcrumbs -->
+    <div class="clearfix"></div>
+    <div class="post-articles question-articles">
+        <question-article *ngIf="question" [question]="question">
+        </question-article><!-- End article -->
+
+    </div><!-- End post-articles -->
+
+</div>

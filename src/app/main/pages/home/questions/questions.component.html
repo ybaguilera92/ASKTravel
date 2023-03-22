@@ -1,0 +1,52 @@
+<div class="the-main-inner float_l">
+    <div class="breadcrumbs d-flex align-items-center justify-content-between  breadcrumbs_1">
+        <div class="breadcrumbs-wrap d-flex align-items-center justify-content-between">
+            <div class="breadcrumb-left">
+                <span class="crumbs">
+                    <span class="breadcrumb-item" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+                        <span itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                            <meta itemprop="position" content="1">
+                                <a itemprop="item" [routerLink]="'/'" title="Inicio"><span itemprop="name">
+                                    <i class="icon-home font-xl mr-2"></i>Inicio</span>
+                                </a>
+                        </span>
+                        <span class="crumbs-span">/</span><span *ngIf="!phrase" class="current">Preguntas</span>
+                        <span *ngIf="phrase != ''" class="current">Resultados de la búsqueda para: {{ phrase }}</span>
+                    </span>
+                </span>
+            </div><!-- End breadcrumb-left -->
+            <div *ngIf="phrase == ''" class="breadcrumb-right d-flex align-items-center">
+                <div class="search-form">
+                    <div class="search-filter-form">
+                        <span class="styled-select select-custom cat-filter">
+                        </span>
+                    </div>
+                </div><!-- End search-form -->
+                <div class="clearfix"></div>
+            </div><!-- End breadcrumb-right --></div><!-- End breadcrumbs-wrap --></div><!-- End breadcrumbs -->
+    <div class="clearfix"></div>
+    <section>
+        <h2 class="screen-reader-text">Viajero Pregunta Últimas preguntas</h2>
+        <div class="post-articles question-articles"></div><!-- End post-articles -->
+        <infinite-scroll (scrolled)="onScroll()">
+            <div *ngIf="data$ | async as data" class="post-articles question-articles">
+                <question-article *ngFor="let question of data['questions']" [question]="question" [type]="'list'">
+                </question-article><!-- End article -->
+            </div><!-- End article-articles -->
+
+            <div class="pagination-wrap pagination-question">
+                <div class="pagination-nav posts-load-more">
+                    <ng-container *ngIf="data$ | async as data">
+                        <span *ngIf="data['questions']?.length != data['totalItems']" [style.display]="'list-item'" class="load_span">
+                            <span class="loader_2"></span>
+                        </span>
+                    </ng-container>
+                    <ng-container *ngIf="data$ | async as data">
+                        <p *ngIf="data['questions']?.length == data['totalItems']" class="no-comments">No existen más preguntas</p>
+                    </ng-container>
+
+                </div><!-- End pagination-nav -->
+            </div>
+        </infinite-scroll>
+    </section><!-- End section -->
+</div>

@@ -1,0 +1,158 @@
+<div class="hide-main-inner"></div>
+<div class="hide-sidebar sidebar-width">
+    <div class="hide-sidebar-inner"></div>
+</div>
+<aside class="sidebar sidebar-width float_l fixed-sidebar"
+       style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+
+    <div [ngClass]="{'fixed': fixed}" class="theiaStickySidebar" #theiaStickySidebar
+         style="padding-top: 0px; padding-bottom: 1px; position: static;"><h3
+        class="screen-reader-text">Sidebar</h3>
+        <div class="inner-sidebar">
+            <div class="widget card widget_ask">
+                <a target="_self" (click)="makeQuestion()"
+                   class="button-default btn btn__primary btn__block btn__semi__height wpqa-question">Preguntar</a>
+            </div>
+            <section id="stats-widget-1" class="widget-no-divider widget stats-widget"><h3
+                class="screen-reader-text">Stats</h3>
+                <div class="widget-wrap stats-card">
+                    <ul class="stats-inner list-unstyled mb-0">
+                        <li class="stats-card__item stats-questions">
+                            <div class="d-flex justify-content-between stats-card__item_div">
+                                <span class="stats-text">Preguntas</span>
+                                <span *ngIf="data$ | async as data; else loading"
+                                      class="stats-value">{{ data[0].total}}</span>
+                                <ng-template #loading>
+                                    <span [style.display]="'list-item'" class="li_loader">
+                                    <span class="loader_3 fa-spin"></span>
+                                </span>
+                                </ng-template>
+                            </div>
+                        </li>
+                        <li class="stats-card__item stats-answers">
+                            <div class="d-flex justify-content-between stats-card__item_div">
+                                <span class="stats-text">Respuestas</span>
+                                <span *ngIf="data$ | async as data; else loading"
+                                      class="stats-value">{{ data[1].total}}</span>
+                                <ng-template #loading>
+                                    <span [style.display]="'list-item'" class="li_loader">
+                                    <span class="loader_3 fa-spin"></span>
+                                </span>
+                                </ng-template>
+                            </div>
+                        </li>
+                        <li style="padding-top: 10px!important;" class="stats-card__item stats-best_answers">
+                            <div class="d-flex justify-content-between stats-card__item_div">
+                                <span style="line-height: normal" class="stats-text">Mejores Respuestas</span>
+                                <span *ngIf="data$ | async as data; else loading"
+                                      class="stats-value">{{ data[1].best}}</span>
+                                <ng-template #loading>
+                                    <span [style.display]="'list-item'" class="li_loader">
+                                    <span class="loader_3 fa-spin"></span>
+                                </span>
+                                </ng-template>
+                            </div>
+                        </li>
+                        <li style="padding-top: 16px!important;" class="stats-card__item stats-users">
+                            <div class="d-flex justify-content-between stats-card__item_div">
+                                <span class="stats-text">Usuarios</span>
+                                <span *ngIf="data$ | async as data; else loading"
+                                      class="stats-value">{{ data[2].total}}</span>
+                                <ng-template #loading>
+                                    <span [style.display]="'list-item'" class="li_loader">
+                                    <span class="loader_3 fa-spin"></span>
+                                </span>
+                                </ng-template>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <div class="widget card tabs-wrap widget-tabs">
+                <div class="widget-title widget-title-tabs">
+                    <ul class="tabs tabstabs-widget-1">
+                        <li [ngClass]="{'current': tab == TABS.POPULAR_TAB}" class="tab"><a
+                            (click)="activeTab(TABS.POPULAR_TAB)" href="#" class="">Popular</a></li>
+                        <li [ngClass]="{'current': tab == TABS.ANSWER_TAB}" class="tab"><a
+                            (click)="activeTab(TABS.ANSWER_TAB)" href="#">Respuestas</a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="widget-wrap">
+                    <div *ngIf="tab == TABS.POPULAR_TAB"
+                         [ngClass]="{'active-tab': tab == TABS.POPULAR_TAB}"
+                         class="widget-posts tab-inner-wrap tab-inner-wraptabs-widget-1">
+                        <div class="user-notifications user-profile-area questions-card">
+                            <div *ngIf="recents$ | async as data">
+                                <ul *ngFor="let question of data[0]['questions']">
+                                    <li class="notifications__item question-item  d-flex widget-posts-text widget-no-img">
+                                                            <span class="span-icon author__avatar">
+                                                                <a href="#">
+                                                                <img class="avatar avatar-20 rounded-circle photo"
+                                                                     alt="mjabascal@sitrans.transnet.cu"
+                                                                     title="mjabascal@sitrans.transnet.cu"
+                                                                     width="20"
+                                                                     height="20"
+                                                                     src="/assets/images/profile/user.png">
+                                                                </a>
+                                                            </span>
+                                        <div>
+                                            <h3 class="question__title">
+                                                <a class="color-dark"
+                                                   [routerLink]="'/question/'+ question.id" style="cursor: pointer"
+                                                   title="{{question.title}}"
+                                                   rel="bookmark">
+                                                    {{ question.title }}
+                                                </a>
+                                            </h3>
+                                            <ul class="widget-post-meta question-item__meta list-unstyled mb-0 d-flex align-items-center">
+                                                <li><a class="post-meta-comment"
+                                                       href="http://localhost/ask-travel/question/how-do-native-speakers-tell-im-foreign-based-on-my-english-alone/#comments"><i
+                                                    class="icon-comment"></i>{{ question.answers.length + ' Respuestas' }}
+                                                </a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="tab == TABS.ANSWER_TAB"
+                         [ngClass]="{'active-tab': tab == TABS.ANSWER_TAB}"
+                         class="tab-inner-wrap tab-inner-wraptabs-widget-1">
+                        <div class="user-notifications user-profile-area">
+                            <div *ngIf="recents$ | async as data">
+                                <ul *ngFor="let answer of data[1]['answers']">
+                                    <li class="notifications__item d-flex ">
+															<span class="span-icon author__avatar">
+									<img *ngIf="!answer.user.fileEncode" class="avatar avatar-25 rounded-circle photo"
+                                         alt="{{answer.user.name+ '' +answer.user.lastName}}"
+                                         title="{{answer.user.name+ '' +answer.user.lastName}}" width="25" height="25"
+                                        
+                                         src="/assets/images/profile/user.png"> 
+                                        <img *ngIf="answer.user.fileEncode"
+                                            class="avatar avatar-25 rounded-circle photo"
+                                            alt="{{answer.user.name+ '' +answer.user.lastName}}"
+                                            title="{{answer.user.name+ '' +answer.user.lastName}}" width="25"
+                                            height="25" src="data:image/png;base64,{{answer.user.fileEncode}}"></span>
+                                        <div class="notification__body">
+                                            {{answer.user.name + ' ' + answer.user.lastName + ' ' + 'agregó una respuesta'}}
+                                            <span
+                                                class="question-title">
+                                                <a [routerLink]="'/question/'+answer.parent" [fragment]="'answer-'+answer.id" [innerHTML]="(answer.description.length > 50 ) ? (answer.description | slice:0:50)+'..':(answer.description)"
+                                                class="notification__question notification__question-dark"
+                                                href="http://localhost/ask-travel/question/why-are-the-british-confused-about-us-calling-bread-rolls-biscuits-when-they-call-bread-rolls-puddings/#comment-72"></a></span>
+                                            <span
+                                                class="notifications-date notification__date d-block mt-2">{{answer.createdDate  | date:'medium'}}</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</aside>

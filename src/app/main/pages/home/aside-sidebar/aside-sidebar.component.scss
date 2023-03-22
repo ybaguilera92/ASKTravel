@@ -1,0 +1,19 @@
+aside-sidebar {
+    #pixel-to-watch {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        top: 100px;
+        left: 0;
+    }
+    .fixed{
+        position: fixed!important;
+        top: 10px;
+        margin-left: 10px;
+    }
+    .avatar{
+        width: 20px!important;
+        height: auto!important;
+        min-width: 20px!important;
+    }
+}

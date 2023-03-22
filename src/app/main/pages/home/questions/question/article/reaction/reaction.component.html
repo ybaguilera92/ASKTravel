@@ -1,0 +1,20 @@
+<ul [ngClass]="{'active-vote': voting,
+                'question-mobile' :  template == templateType.CELL,
+                'answer-vote answer-vote-dislike' : type == objectType.ANSWER || type == objectType.COMMENT}" class="question-vote">
+    <li class="question-vote-up">
+        <a (click)="vote(object, true, type)" data-type="question" data-vote-type="up"
+           class="wpqa_vote question_vote_up vote_not_allow" matTooltip="Me gusta">
+            <i class="icon-up-dir"></i>
+        </a>
+    </li>
+    <li [style.display]=" !voting ? 'list-item' : 'none'" class="vote_result">{{ reaction | async }}</li>
+    <li [style.display]=" voting ? 'list-item' : 'none'" class="li_loader">
+        <span class="loader_3 fa-spin"></span>
+    </li>
+    <li class="question-vote-down">
+        <a (click)="vote(object, false, type)" data-type="question" data-vote-type="down"
+           class="wpqa_vote question_vote_down vote_not_allow" matTooltip="No me gusta">
+            <i class="icon-down-dir"></i>
+        </a>
+    </li>
+</ul>

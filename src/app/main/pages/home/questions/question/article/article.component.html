@@ -1,0 +1,398 @@
+<article class="article-question article-post clearfix question-with-comments answer-question-not-jquery question-vote-image discoura-not-credential question-type-normal post-118 question type-question status-publish hentry question-category-language question_tags-english question_tags-language"
+         itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question">
+    <div class="single-inner-content">
+        <div class="question-inner">
+            <div class="question-image-vote">
+                <div class="author-image author__avatar author-image-42 author_image_mouseover">
+                    <a href="#">
+            <span class="author-image-span">
+              <img *ngIf="question.user.fileEncode" class="avatar avatar-42 photo" alt="{{question.user.email}}"
+                  title="{{question.user.email}}"
+                   width="42" height="42" [src]="question.user.fileEncode">
+                   <img *ngIf="!question.user.fileEncode" class="avatar avatar-42 photo" alt="{{question.user.email}}"
+                       title="{{question.user.email}}"
+                       width="42" height="42" src="/assets/images/profile/user.png">
+            </span>
+                    </a>
+                </div>
+                <reaction [type]="objectType.QUESTION" [object]="question" [template]="templateType.CELL"></reaction>
+            </div>
+            <!-- End question-image-vote -->
+            <div class="question-content question-content-first">
+                <header class="article-header">
+                    <div class="question-header">
+            <span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+              <a class="post-author" itemprop="url"
+                 href="#">
+                <span itemprop="name">{{question.user.name + ' ' + question.user.lastName}}</span>
+              </a>
+            </span>
+                        <div class="post-meta">
+              <span class="post-date">Preguntado: <span class="date-separator"></span>
+                <a itemprop="url">
+                  <span class="entry-date published">{{ question.createdDate | date: 'medium' }}</span>
+                </a>
+                <span class="discy_hide" itemprop="dateCreated">
+                  {{question.createdDate | date: 'medium'}}
+                </span>
+                <span class="discy_hide" itemprop="datePublished">
+                  {{question.createdDate | date: 'medium'}}
+                </span>
+              </span>
+                            <span class="byline">
+                <span class="post-cat"> En: <a href="javascript:void(0)"
+                                               rel="tag">{{question.category.tablaDescription}}</a>
+                </span>
+              </span>
+                        </div>
+                    </div>
+                </header>
+                <div>
+                    <h1 *ngIf="type == 'single'" class="post-title">
+                        <span itemprop="name">{{ question.title }}</span>
+                    </h1>
+                    <h2 *ngIf="type == 'list'" class="post-title">
+                        <a [routerLink]="'/question/'+question.id" style="cursor: pointer" class="post-title">
+                            <span itemprop="name">{{ question.title }}</span>
+                        </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- End question-content-first -->
+            <div class="question-not-mobile question-image-vote question-vote-sticky">
+                <reaction [type]="objectType.QUESTION" [object]="question" [template]="templateType.WEB"></reaction>
+                <!-- End question-sticky -->
+            </div>
+            <!-- End question-image-vote -->
+            <div class="question-content question-content-second">
+                <div class="wpqa_error"></div>
+                <div class="wpqa_success"></div>
+                <div class="post-wrap-content">
+                    <div class="question-content-text">
+                        <div class="all_single_post_content">
+                            <div *ngIf="question.fileEncode" class="featured_image_question">
+                                <a href="http://localhost/ask-travel/wp-content/uploads/2022/04/277756781_738738930447889_3118049173926952215_n-2.jpg">
+                                    <img [style.display]=" !voting ? 'list-item' : 'none'" alt="{{ question.title }}"
+                                         width="260" height="185" [src]="question.fileEncode">
+                                </a>
+                            </div>
+                            <div [innerHtml]="question.description" class="content-text" itemprop="text"></div>
+                            <div class="clearfix"></div>
+                            <div class="question-custom-links">
+                                <div class="clearfix"></div>
+                                <div class="pay-to-sticky-area wpqa-open-div wpqa_hide"></div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <!-- End all_single_post_content -->
+                    </div>
+                    <div class="tagcloud">
+                        <div class="question-tags">
+                            <i class="icon-tags"></i>
+                            <a *ngFor="let tag of question.tags">{{ tag.tablaDescription }}</a>
+                        </div>
+                    </div>
+                </div>
+                <footer class="question-footer">
+                    <ul class="footer-meta">
+                        <li class="best-answer-meta">
+                            <a [routerLink]="'/question/'+ question.id" [fragment]="'answer-'+ question.id"
+                               style="cursor: pointer">
+                                <i class="icon-comment"></i>
+                                <span itemprop="answerCount"
+                                      class="number discy_hide">{{question.answers.length }}</span>
+                                <span class="question-span">{{question.answers.length }} Respuestas</span>
+                            </a>
+                        </li>
+                        <li class="view-stats-meta">
+                            <i class="icon-eye"></i> {{ question.visit }}
+                            <span class="question-span">Vista</span>
+                        </li>
+                        <li class="question-followers question-followers-no-link">
+                            <i class="icon-users"></i>
+                            <span>{{ question.followers ? question.followers.length : 0 }}</span> Seguidores
+                        </li>
+                    </ul>
+                </footer>
+            </div>
+            <!-- End question-content-second -->
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!-- End single-inner-content -->
+    <div *ngIf="type == 'single'" class="question-adv-comments question-after-before question-has-comments">
+        <div id="{{ 'answer-' + question.id }}" class="post-section comments-popup-share">
+            <div class="post-inner">
+                <div class="answers-tabs">
+                    <h3 class="section-title">
+                        <span>{{question.answers.length}} Respuestas</span>
+                    </h3>
+                    <div class="answers-tabs-inner">
+                        <ul>
+                            <li [ngClass]="{'active-tab': activeTab == TAB_NAGIGATION.OLDEST}">
+                                <a (click)="sort(TAB_NAGIGATION.OLDEST)" href="#">Oldest</a>
+                            </li>
+                            <li [ngClass]="{'active-tab': activeTab == TAB_NAGIGATION.VOTED}">
+                                <a (click)="sort(TAB_NAGIGATION.VOTED)" href="#">Voted</a>
+                            </li>
+                            <li [ngClass]="{'active-tab': activeTab == TAB_NAGIGATION.RECENT}">
+                                <a (click)="sort(TAB_NAGIGATION.RECENT)" href="#">Recent</a>
+                            </li>
+                            <li [ngClass]="{'active-tab': activeTab == TAB_NAGIGATION.RANDOM}">
+                                <a (click)="sort(TAB_NAGIGATION.RANDOM)" href="#">Random</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End answers-tabs-inner -->
+                    <div class="clearfix"></div>
+                </div>
+                <!-- End answers-tabs -->
+                <ol class="commentlist clearfix">
+                    <li *ngFor="let answer of question.answers" class="comment even thread-even depth-1  comment">
+                        <answer [answer]="answer"></answer>
+                    </li>
+                    <!-- #add-comments-## -->
+                </ol>
+                <!-- End commentlist -->
+                <div class="clearfix"></div>
+            </div>
+            <!-- End post-inner -->
+        </div>
+        <!-- End post -->
+        <!-- <div id="respond-all"><div id="respond" class="add-comments-respond"><h3 class="section-title">Leave an answer
+                         <div class="cancel-add-comments-reply"><a rel="nofollow" id="cancel-add-comments-reply-link"
+                                                              href="/ask-travel/question/is-this-statement-i-see-him-last-night-can-be-understood-as-i-saw-him-last-night/#respond"
+                                                              style="display:none;">Cancelar la respuesta</a></div></h3><form action="http://localhost/ask-travel/wp-comments-post.php" method="post" id="commentform"
+                           class="post-section add-comments-form answers-form" novalidate="" enctype="multipart/form-data"><p
+                         class="add-comments-login">Logged in as<a class="add-comments-login-login"
+                                                              href="http://localhost/ask-travel/profile/mjabascalsitrans-transnet-cu/"><i
+                         class="icon-user"></i>{{question.user.email}}</a><a class="add-comments-login-logout"
+                                                                                   href="http://localhost/ask-travel/wp-login.php?action=logout&amp;redirect_to=http%3A%2F%2Flocalhost%2Fask-travel%2Fquestion%2Fis-this-statement-i-see-him-last-night-can-be-understood-as-i-saw-him-last-night%2F&amp;_wpnonce=08454c8e7f"
+                                                                                   title="Log out of this account"><i
+                         class="icon-logout"></i>Log out</a></p><div class="wpqa_form"><label for="featured_image">Featured image</label><div class="fileinputs"><input type="file" name="featured_image" id="featured_image"><div class="fakefile"><button type="button">Select file</button><span>Browse</span></div><i class="icon-camera"></i></div></div><div class="clearfix"></div><div class="form-input form-textarea form-add-comments-editor"><div id="wp-add-comments-206-wrap" class="wp-core-ui wp-editor-wrap tmce-active"><div id="wp-add-comments-206-editor-tools" class="wp-editor-tools hide-if-no-js"><div id="wp-add-comments-206-media-buttons" class="wp-media-buttons"><button type="button" class="button insert-media add_media"
+                                                 data-editor="add-comments-206"><span class="wp-media-buttons-icon"></span> Añadir
+                                             medios
+                                         </button></div><div class="wp-editor-tabs"><button type="button" id="add-comments-206-tmce" class="wp-switch-editor switch-tmce"
+                                                 data-wp-editor-id="add-comments-206">Visual
+                                         </button><button type="button" id="add-comments-206-html" class="wp-switch-editor switch-html"
+                                                 data-wp-editor-id="add-comments-206">HTML
+                                         </button></div></div><div id="wp-add-comments-206-editor-container" class="wp-editor-container"><div id="qt_comment-206_toolbar" class="quicktags-toolbar hide-if-no-js"><input
+                                         type="button" id="qt_comment-206_strong" class="ed_button button button-small"
+                                         aria-label="Negrita" value="b"><input type="button" id="qt_comment-206_em"
+                                                                               class="ed_button button button-small"
+                                                                               aria-label="Cursiva" value="i"><input
+                                         type="button" id="qt_comment-206_link" class="ed_button button button-small"
+                                         aria-label="Insertar un enlace" value="link"><input type="button"
+                                                                                             id="qt_comment-206_block"
+                                                                                             class="ed_button button button-small"
+                                                                                             aria-label="Cita"
+                                                                                             value="b-quote"><input
+                                         type="button" id="qt_comment-206_del" class="ed_button button button-small"
+                                         aria-label="Texto eliminado (tachado)" value="del"><input type="button"
+                                                                                                   id="qt_comment-206_ins"
+                                                                                                   class="ed_button button button-small"
+                                                                                                   aria-label="Texto insertado"
+                                                                                                   value="ins"><input
+                                         type="button" id="qt_comment-206_img" class="ed_button button button-small"
+                                         aria-label="Insertar una imagen" value="img"><input type="button"
+                                                                                             id="qt_comment-206_ul"
+                                                                                             class="ed_button button button-small"
+                                                                                             aria-label="Lista con viñetas"
+                                                                                             value="ul"><input type="button"
+                                                                                                               id="qt_comment-206_ol"
+                                                                                                               class="ed_button button button-small"
+                                                                                                               aria-label="Lista numerada"
+                                                                                                               value="ol"><input
+                                         type="button" id="qt_comment-206_li" class="ed_button button button-small"
+                                         aria-label="Elemento de la lista" value="li"><input type="button"
+                                                                                             id="qt_comment-206_code"
+                                                                                             class="ed_button button button-small"
+                                                                                             aria-label="Código"
+                                                                                             value="code"><input
+                                         type="button" id="qt_comment-206_more" class="ed_button button button-small"
+                                         aria-label="Insertar la etiqueta «Leer más»" value="more"><input type="button"
+                                                                                                          id="qt_comment-206_close"
+                                                                                                          class="ed_button button button-small"
+                                                                                                          title="Cerrar todas las etiquetas abiertas"
+                                                                                                          value="cerrar las etiquetas"></div><div id="mceu_80" class="mce-tinymce mce-container mce-panel" hidefocus="1"
+                                          tabindex="-1" role="application"
+                                          style="visibility: hidden; border-width: 1px; width: 100%;"><div id="mceu_80-body" class="mce-container-body mce-stack-layout"><div id="mceu_81"
+                                                  class="mce-top-part mce-container mce-stack-layout-item mce-first"><div id="mceu_81-body" class="mce-container-body"><div id="mceu_82"
+                                                          class="mce-toolbar-grp mce-container mce-panel mce-first mce-last"
+                                                          hidefocus="1" tabindex="-1" role="group"><div id="mceu_82-body" class="mce-container-body mce-stack-layout"><div id="mceu_83"
+                                                                  class="mce-container mce-toolbar mce-stack-layout-item mce-first"
+                                                                  role="toolbar"><div id="mceu_83-body"
+                                                                      class="mce-container-body mce-flow-layout"><div id="mceu_84"
+                                                                          class="mce-container mce-flow-layout-item mce-first mce-last mce-btn-group"
+                                                                          role="group"><div id="mceu_84-body"><div id="mceu_56"
+                                                                                  class="mce-widget mce-btn mce-menubtn mce-fixed-width mce-listbox mce-first mce-btn-has-text"
+                                                                                  tabindex="-1" aria-labelledby="mceu_56"
+                                                                                  role="button" aria-haspopup="true"><button id="mceu_56-open"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><span class="mce-txt">Párrafo</span><i class="mce-caret"></i></button></div><div id="mceu_57" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" aria-pressed="false"
+                                                                                  role="button"
+                                                                                  aria-label="Negrita (Ctrl+B)"><button id="mceu_57-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-bold"></i></button></div><div id="mceu_58" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" aria-pressed="false"
+                                                                                  role="button"
+                                                                                  aria-label="Cursiva (Ctrl+I)"><button id="mceu_58-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-italic"></i></button></div><div id="mceu_59" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" aria-pressed="false"
+                                                                                  role="button"
+                                                                                  aria-label="Lista con viñetas (Shift+Alt+U)"><button id="mceu_59-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-bullist"></i></button></div><div id="mceu_60" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" aria-pressed="false"
+                                                                                  role="button"
+                                                                                  aria-label="Lista numerada (Shift+Alt+O)"><button id="mceu_60-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-numlist"></i></button></div><div id="mceu_61" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" aria-pressed="false"
+                                                                                  role="button"
+                                                                                  aria-label="Cita (Shift+Alt+Q)"><button id="mceu_61-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-blockquote"></i></button></div><div id="mceu_62" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" aria-pressed="false"
+                                                                                  role="button"
+                                                                                  aria-label="Alineación izquierda (Shift+Alt+L)"><button id="mceu_62-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-alignleft"></i></button></div><div id="mceu_63" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" aria-pressed="false"
+                                                                                  role="button"
+                                                                                  aria-label="Alineación centrada (Shift+Alt+C)"><button id="mceu_63-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-aligncenter"></i></button></div><div id="mceu_64" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" aria-pressed="false"
+                                                                                  role="button"
+                                                                                  aria-label="Alineación derecha (Shift+Alt+R)"><button id="mceu_64-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-alignright"></i></button></div><div id="mceu_65" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" aria-pressed="false"
+                                                                                  role="button"
+                                                                                  aria-label="Insertar/editar un enlace (Ctrl+K)"><button id="mceu_65-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-link"></i></button></div><div id="mceu_66" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" role="button"
+                                                                                  aria-label="Eliminar el enlace (Shift+Alt+S)"><button id="mceu_66-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-unlink"></i></button></div><div id="mceu_67" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" role="button"
+                                                                                  aria-label="Más herramientas (Shift+Alt+Z)"><button id="mceu_67-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-wp_adv"></i></button></div><div id="mceu_68"
+                                                                                  class="mce-widget mce-btn mce-last"
+                                                                                  tabindex="-1" role="button"
+                                                                                  aria-label="Insert Image"><button id="mceu_68-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-none"
+                                                                                     style="background-image: url('http://localhost/ask-travel/wp-content/plugins/WPQA/editor/image.png')"></i></button></div></div></div></div></div><div id="mceu_85"
+                                                                  class="mce-container mce-toolbar mce-stack-layout-item mce-last"
+                                                                  role="toolbar" style="display: none;"><div id="mceu_85-body"
+                                                                      class="mce-container-body mce-flow-layout"><div id="mceu_86"
+                                                                          class="mce-container mce-flow-layout-item mce-first mce-last mce-btn-group"
+                                                                          role="group"><div id="mceu_86-body"><div id="mceu_69"
+                                                                                  class="mce-widget mce-btn mce-first"
+                                                                                  tabindex="-1" aria-pressed="false"
+                                                                                  role="button"
+                                                                                  aria-label="Tachado (Shift+Alt+D)"><button id="mceu_69-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-strikethrough"></i></button></div><div id="mceu_70" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" role="button"
+                                                                                  aria-label="Línea horizontal"><button id="mceu_70-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-hr"></i></button></div><div id="mceu_71"
+                                                                                  class="mce-widget mce-btn mce-splitbtn mce-colorbutton"
+                                                                                  role="button" tabindex="-1"
+                                                                                  aria-haspopup="true"
+                                                                                  aria-label="Color del texto"><button role="presentation" hidefocus="1"
+                                                                                         type="button" tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-forecolor"></i><span
+                                                                                     id="mceu_71-preview"
+                                                                                     class="mce-preview"></span></button><button type="button" class="mce-open"
+                                                                                         hidefocus="1" tabindex="-1"><i
+                                                                                     class="mce-caret"></i></button></div><div id="mceu_72" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" aria-pressed="false"
+                                                                                  role="button"
+                                                                                  aria-label="Pegar como texto"><button id="mceu_72-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-pastetext"></i></button></div><div id="mceu_73" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" role="button"
+                                                                                  aria-label="Borrar los formatos"><button id="mceu_73-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-removeformat"></i></button></div><div id="mceu_74" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" role="button"
+                                                                                  aria-label="Caracter especial"><button id="mceu_74-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-charmap"></i></button></div><div id="mceu_75" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" role="button"
+                                                                                  aria-label="Reducir la sangría"><button id="mceu_75-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-outdent"></i></button></div><div id="mceu_76" class="mce-widget mce-btn"
+                                                                                  tabindex="-1" role="button"
+                                                                                  aria-label="Aumentar la sangría"><button id="mceu_76-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-indent"></i></button></div><div id="mceu_77"
+                                                                                  class="mce-widget mce-btn mce-disabled"
+                                                                                  tabindex="-1" role="button"
+                                                                                  aria-label="Deshacer (Ctrl+Z)"
+                                                                                  aria-disabled="true"><button id="mceu_77-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-undo"></i></button></div><div id="mceu_78"
+                                                                                  class="mce-widget mce-btn mce-disabled"
+                                                                                  tabindex="-1" role="button"
+                                                                                  aria-label="Rehacer (Ctrl+Y)"
+                                                                                  aria-disabled="true"><button id="mceu_78-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-redo"></i></button></div><div id="mceu_79"
+                                                                                  class="mce-widget mce-btn mce-last"
+                                                                                  tabindex="-1" role="button"
+                                                                                  aria-label="Atajos de teclado (Shift+Alt+H)"><button id="mceu_79-button"
+                                                                                         role="presentation" type="button"
+                                                                                         tabindex="-1"><i
+                                                                                     class="mce-ico mce-i-wp_help"></i></button></div></div></div></div></div></div></div></div></div><div id="mceu_87"
+                                                  class="mce-edit-area mce-container mce-panel mce-stack-layout-item"
+                                                  hidefocus="1" tabindex="-1" role="group"
+                                                  style="border-width: 1px 0px 0px;"><iframe id="add-comments-206_ifr" frameborder="0" allowtransparency="true"
+                                                         title="Área de texto enriquecido. Pulsa Alt-Shift-H para obtener ayuda."
+                                                         style="width: 100%; height: 224px; display: block;"></iframe></div><div id="mceu_88"
+                                                  class="mce-statusbar mce-container mce-panel mce-stack-layout-item mce-last"
+                                                  hidefocus="1" tabindex="-1" role="group"
+                                                  style="border-width: 1px 0px 0px;"><div id="mceu_88-body" class="mce-container-body mce-flow-layout"><div id="mceu_89" class="mce-path mce-flow-layout-item mce-first"><div class="mce-path-item">&nbsp;</div></div><div id="mceu_90"
+                                                          class="mce-flow-layout-item mce-last mce-resizehandle"><i
+                                                         class="mce-ico mce-i-resize"></i></div></div></div></div></div><textarea class="wp-editor-area" rows="10" autocomplete="off" cols="40" name="add-comments"
+                                               id="add-comments-206" style="display: none;" aria-hidden="true"></textarea><input
+                                     id="tinymce-uploader" type="file" name="pic" accept="image/*" style="display:none"></div></div></div><div class="wpqa_error"></div><p class="form-submit"><input name="submit" type="submit" id="submit"
+                                                       class="button-default button-hide-click button-default-question"
+                                                       value="Submit"><span class="clearfix"></span><span
+                             class="load_span"><span class="loader_2"></span></span><input type="hidden"
+                                                                                            name="comment_post_ID"
+                                                                                            value="118" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><input type="hidden" id="_wp_unfiltered_html_comment_disabled"
+                                    name="_wp_unfiltered_html_comment" value="7de6e18db2"></form></div>&lt;!&ndash; #respond &ndash;&gt;
+             </div>-->
+    </div>
+</article>
+<!-- End article -->

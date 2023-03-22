@@ -1,0 +1,116 @@
+<div id="products" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent"
+             fxLayout="column" fxLayoutAlign="center center"
+             fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
+
+            <!-- APP TITLE -->
+            <div class="logo mb-24 mb-md-0"
+                 fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    shopping_basket
+                </mat-icon>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Catálogos
+                </span>
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <div class="search-wrapper mx-32 mx-md-0">
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <form class="form">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-select [value]="selected" [placeholder]="'Seleccione ...'" (selectionChange)="getCatalog($event.value)">
+                                <mat-option *ngFor="let opt of options" [value]="opt.idTabla">
+                                    {{opt.idTabla}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </form>
+                </div>
+            </div>
+            <!-- / SEARCH -->
+
+            <!-- ADD BUTTON -->
+            <button mat-raised-button
+                    [routerLink]="'/admin/catalogs/new/'+selected"
+                    class="add-product-button fuse-white mt-24 mt-md-0">
+                <span>Nuevo</span>
+            </button>
+            <!-- / ADD BUTTON -->
+
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <mat-table class="products-table"
+                       #table [dataSource]="dataSource"
+                       matSort
+                       [@animateStagger]="{value:'50'}"
+                       fusePerfectScrollbar>
+
+                <!-- ID Argument -->
+                <ng-container matColumnDef="tablaArgumento">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Argumento</mat-header-cell>
+                    <mat-cell *matCellDef="let catalog">
+                        <p class="text-truncate">{{catalog.tablaArgumento}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- ID Description -->
+                <ng-container matColumnDef="tablaDescription">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</mat-header-cell>
+                    <mat-cell *matCellDef="let catalog">
+                        <p class="text-truncate">{{catalog.tablaDescription}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Reference -->
+                <ng-container matColumnDef="tablaReferencia">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Referencia</mat-header-cell>
+                    <mat-cell *matCellDef="let catalog">
+                        <p class="text-truncate">{{catalog.tablaReferencia}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Status Column -->
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Estado</mat-header-cell>
+                    <mat-cell *matCellDef="let catalog" fxHide fxShow.gt-xs>
+                        <mat-icon *ngIf="catalog.status === 'A'" class="active-icon green-600 s-16">check</mat-icon>
+                        <mat-icon *ngIf="catalog.status === 'I'" class="active-icon red-500 s-16">close</mat-icon>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let catalog; columns: displayedColumns;"
+                         class="product"
+                         matRipple
+                         [routerLink]="'/admin/catalogs/'+catalog.id+'/'+catalog.tablaDescription">
+                </mat-row>
+
+            </mat-table>
+
+            <mat-paginator #paginator
+                           [length]="dataSource?.length"
+                           [pageSize]="5"
+                           [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator>
+
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>

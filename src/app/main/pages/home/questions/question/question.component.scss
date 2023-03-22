@@ -1,0 +1,8 @@
+question{
+    a.disabled,
+    a.disabled:hover {
+        background-color: transparent!important;
+        cursor: not-allowed;
+        color: #7c7f85;
+    }
+}

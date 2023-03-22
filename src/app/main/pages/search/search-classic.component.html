@@ -1,0 +1,91 @@
+<div id="search-classic" class="page-layout simple fullwidth">
+
+    <!-- HEADER -->
+    <div class="header accent adjust-content" fxLayout="row" fxLayoutAlign="start center">
+
+        <img id="logo-search" src="assets/images/logos/viajero.png">
+        <div class="search-wrapper" fxFlex fxLayout="row" fxLayoutAlign="start center">
+            <div class="search mat-elevation-z7" fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon>search</mat-icon>
+                <input [formControl]="searchControl" (keydown.enter)="findAnswersOnEnter($event)" [(ngModel)]="question" [matAutocomplete]="auto"
+                       placeholder="Buscar ..." fxFlex>
+                <mat-icon style="cursor: pointer" *ngIf="searchControl.value" (click)="clear()">close</mat-icon>
+
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="findAnswers($event)">
+                    <mat-option *ngFor="let question of (questions | async)" [value]="question.description"
+                                [id]="question.id">
+                        <span [innerHTML]="question.description | bold:searchControl.value"></span>
+                    </mat-option>
+                </mat-autocomplete>
+            </div>
+        </div>
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content adjust-content">
+
+        <div class="result-info" fxLayout="row" fxLayoutAlign="start center">
+
+            <span class="result-count h3 secondary-text">
+                <span>{{ searchItems.length }}</span>
+                <span class="ml-4">Resultado(s)</span>
+            </span>
+
+        </div>
+
+        <div class="results">
+
+            <div class="result-item" *ngFor="let item of searchItems">
+                <div class="title blue-800-fg">{{item.title}}</div>
+                <div class="excerpt">{{item.excerpt}}</div>
+            </div>
+
+            <div class="simple-pagination">
+
+                <button mat-button class="pagination-item disabled" disabled="disabled"
+                        aria-label="Go to previous page">
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+
+                <button mat-button class="pagination-item active" [disableRipple]="true" aria-label="Go to page 1">
+                    <span>1</span>
+                </button>
+
+                <button mat-button class="pagination-item" aria-label="Go to page 2">
+                    <span>2</span>
+                </button>
+
+                <button mat-button class="pagination-item" aria-label="Go to page 3">
+                    <span>3</span>
+                </button>
+
+                <button mat-button class="pagination-item" aria-label="Go to page 4">
+                    <span>4</span>
+                </button>
+
+                <button mat-button class="pagination-item" aria-label="Go to page 5">
+                    <span>5</span>
+                </button>
+
+                <button mat-button class="pagination-item">
+                    <span>...</span>
+                </button>
+
+                <button mat-button class="pagination-item" aria-label="Go to page 10">
+                    <span>10</span>
+                </button>
+
+                <button mat-button class="pagination-item" aria-label="Go to next page">
+                    <mat-icon>chevron_right</mat-icon>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>

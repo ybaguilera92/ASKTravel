@@ -1,0 +1,56 @@
+<div id="{{ 'answer-'+ answer.id }}" class="comment-body clearfix">
+    <div class="comment-text">
+        <div class="author-image author__avatar author-image-42">
+            <a title="" href="https://2code.info/">
+                    <span class="author-image-span">
+                      <img class="avatar avatar-42 photo" alt="" title="" width="42" height="42"
+                            src="./assets/images/user2.png">
+                    </span>
+            </a>
+        </div>
+        <div class="author clearfix">
+            <div *ngIf="best$ | async as bestAnswer">
+                <div *ngIf="bestAnswer.id == answer.id && bestAnswer.best" class="best-answer">Mejor Respuesta</div>
+            </div>
+            <div class="comment-meta">
+                <div class="comment-author">
+                      <span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+                        <a itemprop="url" href="https://2code.info/">
+                          <span itemprop="name">{{ answer.user.name + ' ' + answer.user.lastName }}
+                             
+                              </span>
+                        </a>
+                      </span>
+                </div>
+                <a href="http://localhost/ask-travel/question/is-this-statement-i-see-him-last-night-can-be-understood-as-i-saw-him-last-night/#comment-64"
+                   class="comment-date" itemprop="url">
+                    <span class="discy_hide" itemprop="dateCreated">{{ answer.createdDate  | date:'short' }}</span>Respuesta
+                    añadida {{ answer.createdDate  | date:'medium' }}
+                </a>
+            </div>
+            <!-- End add-comments-meta -->
+        </div>
+        <!-- End author -->
+        <div class="text">
+            <div *ngIf="answer" [innerHTML]="answer.description" itemprop="text"></div>
+            <div class="clearfix"></div>
+            <div class="clearfix"></div>
+            <div class="wpqa_error"></div>
+            <reaction [type]="objectType.ANSWER" [object]="answer" [template]="templateType.WEB"></reaction>
+            <reply [type]="objectType.ANSWER" [object]="answer"></reply>
+        </div>
+        <!-- End text -->
+        <div class="clearfix"></div>
+    </div>
+    <!-- End add-comments-text -->
+</div>
+<!-- End add-comments-body -->
+<div *ngIf="comments$ | async as comments">
+    <comment *ngFor="let comment of comments" [comment]="comment"></comment>
+</div>
+
+<div class="pagination-wrap pagination-question">
+    <div class="pagination-nav posts-load-more">
+        <span [style.display]=" end ? 'list-item' : 'none'" class="load_span"><span class="loader_2"></span></span>
+    </div><!-- End pagination-nav -->
+</div>

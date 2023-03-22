@@ -1,0 +1,10 @@
+navigation-question{
+    .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+        display: none!important;
+    }
+    .menu-tabs{
+        a{
+            cursor: pointer;
+        }
+    }
+}

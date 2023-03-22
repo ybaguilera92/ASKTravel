@@ -1,0 +1,170 @@
+<div id="user" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/admin/users'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <div fxLayout="column" fxLayoutAlign="start start"
+                     [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2">
+                        Usuario
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span>{{editing ? 'Editar usuario' : 'Nuevo Usuario'}}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <button mat-raised-button
+                    class="save-user-button"
+                    [disabled]="userForm.invalid"
+                    *ngIf="!editing" (click)="addUser()">
+                <span>Adicionar</span>
+            </button>
+
+            <button mat-raised-button
+                    class="save-user-button"
+                    [disabled]="userForm.invalid || userForm.pristine"
+                    *ngIf="editing" (click)="saveUser()">
+                <span>Guardar</span>
+            </button>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <form name="userForm" [formGroup]="userForm" class="user w-100-p" fxLayout="column" fxFlex>
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                <div fxLayout="row" fxLayoutAlign="space-between">
+                                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="45">
+                                        <mat-label>Nombre</mat-label>
+                                        <input matInput  placeholder="Nombre"
+                                               name="name"
+                                               formControlName="name">
+                                        <mat-error *ngIf="userForm.get('name').hasError('required')">
+                                            El nombre del usuario es requerido
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('name').hasError('minlength')">
+                                            La cantidad de carecteres mínima es 5.
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('name').hasError('maxlength')">
+                                            La cantidad de carecteres máxima es 50.
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="45">
+                                        <mat-label>Apellidos</mat-label>
+                                        <input matInput  placeholder="Apellidos"
+                                               name="lastName"
+                                               formControlName="lastName">
+                                        <mat-error *ngIf="userForm.get('lastName').hasError('required')">
+                                            Los apellidos del usuario son requeridos
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('lastName').hasError('minlength')">
+                                            La cantidad de carecteres mínima es 5.
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('lastName').hasError('maxlength')">
+                                            La cantidad de carecteres máxima es 50.
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="space-between">
+                                    <mat-form-field *ngIf="editing" appearance="outline" floatLabel="always" fxFlex="45">
+                                        <mat-label>Usuario</mat-label>
+                                        <input matInput placeholder="Usuario"
+                                               name="username"
+                                               formControlName="username">
+                                        <mat-error *ngIf="userForm.get('username').hasError('required')">
+                                           El usuario es requerido
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('username').hasError('minlength')">
+                                            La cantidad de carecteres mínima es 4.
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('username').hasError('maxlength')">
+                                            La cantidad de carecteres máxima es 10.
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field *ngIf="!editing" appearance="outline" floatLabel="always" fxFlex="45">
+                                        <mat-label>Contraseña</mat-label>
+                                        <input matInput type="password" placeholder="Contraseña"
+                                               name="password"
+                                               formControlName="password">
+                                        <mat-error *ngIf="userForm.get('password').hasError('required')">
+                                            La contraseña del usuario es requerida
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('password').hasError('pattern')">
+                                            Contraseña débil
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="45">
+                                        <mat-label>Correo electrónico</mat-label>
+                                        <input matInput placeholder="Correo electrónico"
+                                               name="email"
+                                               formControlName="email">
+                                        <mat-error *ngIf="userForm.get('email').hasError('required')">
+                                            El correo del usuario es requerido
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('email').hasError('minlength')">
+                                            La cantidad de carecteres mínima es 10.
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('email').hasError('maxlength')">
+                                            La cantidad de carecteres máxima es 50.
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="space-between">
+                                    <mat-form-field  appearance="outline" fxFlex="45">
+                                        <mat-label>Rol</mat-label>
+                                        <mat-select [placeholder]="'Seleccione ...'"
+                                                    formControlName="rol">
+                                            <mat-option *ngFor="let role of roles" [value]="role.tablaArgumento">
+                                                {{role.tablaDescription}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="userForm.get('rol').hasError('required')">
+                                            El rol del usuario es requerido
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field  appearance="outline" fxFlex="45">
+                                        <mat-label>Estado</mat-label>
+                                        <mat-select  [placeholder]="'Seleccione ...'"
+                                                     formControlName="enabled">
+                                            <mat-option *ngFor="let opt of options" [value]="opt.id">
+                                                {{opt.desc}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="userForm.get('enabled').hasError('required')">
+                                            El estado del usuario es requerido
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                </form>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>
