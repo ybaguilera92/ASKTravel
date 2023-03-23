@@ -11,7 +11,7 @@
                                 <a class="" [routerLink]="'/'" href="#">Inicio</a></li>
                             <li id="menu-item-76"
                                 class="menu-item menu-item-type-post_type menu-item-object-page menu-item-76"><a
-                                    class="" href="#" [routerLink]="'/content'">Sobre Nosotros</a></li>
+                                    class="" href="#" [routerLink]="'/about'">Sobre Nosotros</a></li>
                             <li id="menu-item-76"
                                 class="menu-item menu-item-type-post_type menu-item-object-page menu-item-76">
                                 <a target="_self" class="wpqa-question" (click)="makeQuestion()">
@@ -47,7 +47,7 @@
                         <mat-menu #menu="matMenu">
                             <ul>
                                 <li>
-                                    <a [routerLink]="['/profile', this.currentUser.id]">
+                                    <a [routerLink]="['/profile', currentUser.id]" [queryParams]="{type: 'view'}">
                                         <i class="icon-user"></i>
                                         Perfil de Usuario
                                     </a>
@@ -55,7 +55,7 @@
                                 <li><a [routerLink]="['/profile',currentUser.id]" [queryParams]="{type: 'edit'}"
                                         href="#"><i class="icon-pencil"></i>Editar Perfil</a></li>
                                  <li><a routerLink="/admin/users"
-                                         href="#"><i class="icon-pencil"></i>Menú Administración</a></li>
+                                         href="#"><i class="icon-menu"></i>Menú Administración</a></li>
 
                                 <li><a (click)="logout()"><i class="icon-logout"></i>Desconectarse</a></li>
                             </ul>

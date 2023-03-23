@@ -2,35 +2,35 @@ import { FuseNavigation } from '@fuse/types';
 
 export const navigation: FuseNavigation[] = [
     {
-        id       : 'admin',
-        title    : 'Administración',
+        id: 'admin',
+        title: 'Administración',
         translate: 'NAV.APPLICATIONS',
-        type     : 'group',
-        children : [
+        type: 'group',
+        children: [           
             {
-                id       : 'todo',
-                title    : 'Preguntas',
+                id: 'todo',
+                title: 'Preguntas',
                 translate: 'NAV.SAMPLE.TITLE',
-                type     : 'item',
-                icon     : 'question_answer',
-                url      : '/admin/questions',
+                type: 'item',
+                icon: 'question_answer',
+                url: '/admin/questions',
             },
             {
-                id       : 'catalogos',
-                title    : 'Catálogos',
+                id: 'catalogos',
+                title: 'Catálogos',
                 translate: 'NAV.SAMPLE.TITLE',
-                type     : 'item',
-                icon     : 'description',
-                url      : '/admin/catalogs',
+                type: 'item',
+                icon: 'description',
+                url: '/admin/catalogs',
             },
             {
-                id       : 'usuarios',
-                title    : 'Usuarios',
+                id: 'usuarios',
+                title: 'Usuarios',
                 translate: 'NAV.SAMPLE.TITLE',
-                type     : 'item',
-                icon     : 'description',
-                url      : '/admin/users',
-            }
+                type: 'item',
+                icon: 'description',
+                url: '/admin/users',
+            }           
         ]
     }
 ];

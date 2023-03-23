@@ -1,18 +1,19 @@
-<article class="article-question article-post clearfix question-with-comments answer-question-not-jquery question-vote-image discoura-not-credential question-type-normal post-118 question type-question status-publish hentry question-category-language question_tags-english question_tags-language"
-         itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question">
+<article
+    class="article-question article-post clearfix question-with-comments answer-question-not-jquery question-vote-image discoura-not-credential question-type-normal post-118 question type-question status-publish hentry question-category-language question_tags-english question_tags-language"
+    itemprop="mainEntity" itemscope="" itemtype="https://schema.org/Question">
     <div class="single-inner-content">
         <div class="question-inner">
             <div class="question-image-vote">
                 <div class="author-image author__avatar author-image-42 author_image_mouseover">
                     <a href="#">
-            <span class="author-image-span">
-              <img *ngIf="question.user.fileEncode" class="avatar avatar-42 photo" alt="{{question.user.email}}"
-                  title="{{question.user.email}}"
-                   width="42" height="42" [src]="question.user.fileEncode">
-                   <img *ngIf="!question.user.fileEncode" class="avatar avatar-42 photo" alt="{{question.user.email}}"
-                       title="{{question.user.email}}"
-                       width="42" height="42" src="/assets/images/profile/user.png">
-            </span>
+                        <span class="author-image-span">
+                            <img *ngIf="question.user.fileEncode" class="avatar avatar-42 photo"
+                                alt="{{question.user.email}}" title="{{question.user.email}}" width="42" height="42"
+                                [src]="fileEncode">
+                            <img *ngIf="!question.user.fileEncode" class="avatar avatar-42 photo"
+                                alt="{{question.user.email}}" title="{{question.user.email}}" width="42" height="42"
+                                src="/assets/images/profile/user.png">
+                        </span>
                     </a>
                 </div>
                 <reaction [type]="objectType.QUESTION" [object]="question" [template]="templateType.CELL"></reaction>
@@ -21,29 +22,29 @@
             <div class="question-content question-content-first">
                 <header class="article-header">
                     <div class="question-header">
-            <span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-              <a class="post-author" itemprop="url"
-                 href="#">
-                <span itemprop="name">{{question.user.name + ' ' + question.user.lastName}}</span>
-              </a>
-            </span>
+                        <span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+                            <a class="post-author" itemprop="url" href="#">
+                                <span itemprop="name">{{question.user.name + ' ' + question.user.lastName}}</span>
+                            </a>
+                        </span>
                         <div class="post-meta">
-              <span class="post-date">Preguntado: <span class="date-separator"></span>
-                <a itemprop="url">
-                  <span class="entry-date published">{{ question.createdDate | date: 'medium' }}</span>
-                </a>
-                <span class="discy_hide" itemprop="dateCreated">
-                  {{question.createdDate | date: 'medium'}}
-                </span>
-                <span class="discy_hide" itemprop="datePublished">
-                  {{question.createdDate | date: 'medium'}}
-                </span>
-              </span>
+                            <span class="post-date">Preguntado: <span class="date-separator"></span>
+                                <a itemprop="url">
+                                    <span
+                                        class="entry-date published">{{ question.createdDate | date: 'medium' }}</span>
+                                </a>
+                                <span class="discy_hide" itemprop="dateCreated">
+                                    {{question.createdDate | date: 'medium'}}
+                                </span>
+                                <span class="discy_hide" itemprop="datePublished">
+                                    {{question.createdDate | date: 'medium'}}
+                                </span>
+                            </span>
                             <span class="byline">
-                <span class="post-cat"> En: <a href="javascript:void(0)"
-                                               rel="tag">{{question.category.tablaDescription}}</a>
-                </span>
-              </span>
+                                <span class="post-cat"> En: <a href="javascript:void(0)"
+                                        rel="tag">{{question.category.tablaDescription}}</a>
+                                </span>
+                            </span>
                         </div>
                     </div>
                 </header>
@@ -71,9 +72,10 @@
                     <div class="question-content-text">
                         <div class="all_single_post_content">
                             <div *ngIf="question.fileEncode" class="featured_image_question">
-                                <a href="http://localhost/ask-travel/wp-content/uploads/2022/04/277756781_738738930447889_3118049173926952215_n-2.jpg">
+                                <a
+                                    href="http://localhost/ask-travel/wp-content/uploads/2022/04/277756781_738738930447889_3118049173926952215_n-2.jpg">
                                     <img [style.display]=" !voting ? 'list-item' : 'none'" alt="{{ question.title }}"
-                                         width="260" height="185" [src]="question.fileEncode">
+                                        width="260" height="185" [src]="question.fileEncode">
                                 </a>
                             </div>
                             <div [innerHtml]="question.description" class="content-text" itemprop="text"></div>
@@ -97,10 +99,10 @@
                     <ul class="footer-meta">
                         <li class="best-answer-meta">
                             <a [routerLink]="'/question/'+ question.id" [fragment]="'answer-'+ question.id"
-                               style="cursor: pointer">
+                                style="cursor: pointer">
                                 <i class="icon-comment"></i>
                                 <span itemprop="answerCount"
-                                      class="number discy_hide">{{question.answers.length }}</span>
+                                    class="number discy_hide">{{question.answers.length }}</span>
                                 <span class="question-span">{{question.answers.length }} Respuestas</span>
                             </a>
                         </li>

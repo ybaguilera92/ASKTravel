@@ -77,7 +77,9 @@ export class HomeComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this._faqService.onFaqsChanged
+       
+        
+               this._faqService.onFaqsChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(response => {
                 this.faqs = response;
@@ -106,6 +108,7 @@ export class HomeComponent implements OnInit, OnDestroy
      */
     ngOnDestroy(): void
     {
+        sessionStorage.removeItem('home');
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();

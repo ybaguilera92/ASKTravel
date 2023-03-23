@@ -31,6 +31,7 @@ export class ArticleComponent implements OnInit, AfterViewInit, OnDestroy {
     currentUser: User;
     objectType = objectType;
     templateType = templateType;
+    fileEncode : any;
     readonly TAB_NAGIGATION = {
         VOTED: 'VOTED',
         OLDEST: 'OLDEST',
@@ -58,6 +59,7 @@ export class ArticleComponent implements OnInit, AfterViewInit, OnDestroy {
         private _matSnackBar: MatSnackBar,
         private commonService: CommonService,
         private domSanitizer: DomSanitizer,
+       
     ) {
 
         // Set the private defaults
@@ -89,14 +91,20 @@ export class ArticleComponent implements OnInit, AfterViewInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+       
         this._authenticationService.currentUser.subscribe((user) => {
             this.currentUser = !isNullOrEmpty(user) ? user : !isNullOrEmpty(this.tokenStorage.getUser()) ? this.tokenStorage.getUser() : null;
         });
-        if (!isNullOrEmpty(this.question.user.fileEncode)) {
-            this.question.user.fileEncode = this.domSanitizer.bypassSecurityTrustUrl("data:image/png;base64, " + this.question.user.fileEncode);      
+        if (!isNullOrEmpty(this.question.user.fileEncode)) {            
+            this.photo_url(this.question.user.fileEncode);
+           // this.question.user.fileEncode = this.domSanitizer.bypassSecurityTrustUrl("data:image/jpeg;base64, " + this.question.user.fileEncode);      
         }
     }
+    photo_url(data: string) {
+        this.fileEncode = this.domSanitizer.bypassSecurityTrustUrl("data:image/jpeg;base64, " + data);
 
+    }
+   
     ngAfterViewInit(){
         //this.sort(this.TAB_NAGIGATION.OLDEST);
     }

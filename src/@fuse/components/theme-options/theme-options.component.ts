@@ -8,6 +8,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector     : 'fuse-theme-options',
@@ -43,7 +44,8 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
         private _fuseConfigService: FuseConfigService,
         private _fuseNavigationService: FuseNavigationService,
         private _fuseSidebarService: FuseSidebarService,
-        private _renderer: Renderer2
+        private _renderer: Renderer2,
+        private router: Router
     )
     {
         // Set the defaults
@@ -144,6 +146,15 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
                     function: () => {
                         this.toggleSidebarOpen('themeOptionsPanel');
                     }
+                },
+                {
+                    id: 'customize',
+                    title: 'Inicio',
+                    type: 'item',
+                    icon: 'home',
+                    function: () => {                       
+                        this.router.navigate(['/']);
+                    }
                 }
             ]
         };
@@ -167,6 +178,10 @@ export class FuseThemeOptionsComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------
+    inicio() {
+        console.log('hola');
+        this.router.navigate(['/']);
+     }
 
     /**
      * Reset the form values based on the

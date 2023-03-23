@@ -26,22 +26,21 @@
                             </a>
                         </li>
                     </ul>
-                    <div class="discy_hide mobile-tabs"><span class="styled-select"><select class="home_categories">					<option
-                        value="http://localhost/ask-travel/?show=recent-questions">
-				Recent Questions					</option>
-									<option selected="selected" value="http://localhost/ask-travel/?show=most-answered">
-				Most Answered					</option>
-									<option value="http://localhost/ask-travel/?show=question-bump">
-				Bump Question					</option>
-									<option value="http://localhost/ask-travel/?show=answers">
-				Answers					</option>
-									<option value="http://localhost/ask-travel/?show=most-visited">
-				Most Visited					</option>
-									<option value="http://localhost/ask-travel/?show=most-voted">
-				Most Voted					</option>
-									<option value="http://localhost/ask-travel/?show=no-answers">
-				No Answers					</option>
-				</select></span></div>
+                    <div class="discy_hide mobile-tabs">
+                         <a (click)="goTo(NAVIGATION.RECENT_QUESTIONS)">
+                             <b>Preguntas recientes</b>
+                         </a> |
+                          <a (click)="goTo(NAVIGATION.MOST_ANSWERED)">
+                             <b> Más respondidas</b>
+                          </a>
+                          | <a (click)="goTo(NAVIGATION.MOST_VISITED)">
+                            <b>Más visitadas</b>
+                          </a>
+                          | <a (click)="goTo(NAVIGATION.MOST_VOTED)">
+                            <b>Más votadas</b>
+                          </a>
+                        
+                    </div>
                 </div>
             </div><!-- End wrap-tabs -->
         </div><!-- End col9 -->

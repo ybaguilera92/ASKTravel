@@ -67,14 +67,20 @@ export class QuestionsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        window.location.reload();
+        console.log('hola');
         this.data$ = this.homeService.data$
 
         this.type = this.homeService.NAVIGATION.RECENT_QUESTIONS;
         this.route.paramMap.subscribe((params: ParamMap) => {
-            if(!isNullOrEmpty(params.get('question'))){
+            if (!isNullOrEmpty(params.get('question'))) {
                 this.phrase = params.get('question');
             }
-        })
+        });
+        if (!sessionStorage.getItem('content')) {
+            window.location.reload();
+            sessionStorage.setItem('content', 'true');
+        }
     }
 
     /**

@@ -71,14 +71,11 @@ export class UsersComponent implements OnInit,  OnDestroy {
     
     ngOnInit(): void
     {
-        // if (!sessionStorage.getItem('content')) {
-        //     console.log('hola2');
-        //     window.location.reload();
-        //     sessionStorage.setItem('content', 'true');
-        // } else { 
-        //     console.log('hola');
-        // }
-        //window.location.reload();
+        if (!sessionStorage.getItem('users')) {
+            window.location.reload();
+            sessionStorage.setItem('users', 'true');
+        }
+       
         this.usersService.onUsersChanged.subscribe(options => {
             if(options.users.length){
                 this.paginator.length = options.page.totalElements;
@@ -96,7 +93,7 @@ export class UsersComponent implements OnInit,  OnDestroy {
             .subscribe();
     }
     ngOnDestroy(): void {
-        sessionStorage.removeItem('content');
+        sessionStorage.removeItem('users');
     }
     getServerData() {
         this.showTable = false;

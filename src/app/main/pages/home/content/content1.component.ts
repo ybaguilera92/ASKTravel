@@ -14,10 +14,10 @@ export class ContentComponent1 implements OnInit, OnDestroy {
     {
     }
     ngOnInit(): void {
-        // if (!sessionStorage.getItem('content')) {
-        //     window.location.reload();
-        //     sessionStorage.setItem('content','true');
-        // }
+        if (!sessionStorage.getItem('content')) {
+            window.location.reload();
+            sessionStorage.setItem('content','true');
+        }
        
     }
     ngOnDestroy(): void {

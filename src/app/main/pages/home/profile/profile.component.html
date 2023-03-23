@@ -13,25 +13,19 @@
                             </a>
                         </span>
                         <span class="crumbs-span">/</span>
-                        <a (click)="changeMode('VIEW')" itemprop="item" href="#" title="profile">
-                            <span [ngClass]="{'current': mode == 'VIEW'}" itemprop="name">
-                                {{currentUser.displayName}}
+                        
+                        
+                            <span [ngClass]="{'current': type == 'VIEW'}" itemprop="name">
+                              Perfil: {{currentUser.name}} {{currentUser.lastName}}
                             </span>
-                        </a>
-                        <span *ngIf="mode == 'EDIT'" class="crumbs-span">/</span>
-                        <span *ngIf="mode == 'EDIT'" class="current">{{'Editar perfil'}}</span>
+                      
+                       
 
                     </span>
                 </span>
             </div>
             <!-- End breadcrumb-left -->
-            <div class="breadcrumb-right d-flex align-items-center">
-                <div class="question-navigation edit-profile">
-                    <a class="btn btn__sm btn__primary" (click)="changeMode('EDIT')" href="#">
-                        <i class="icon-pencil"></i>Editar perfil</a>
-                </div>
-                <div class="clearfix"></div>
-            </div><!-- End breadcrumb-right -->
+            
         </div><!-- End breadcrumbs-wrap -->
     </div><!-- End breadcrumbs -->
     <div class="clearfix"></div>

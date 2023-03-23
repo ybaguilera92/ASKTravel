@@ -203,8 +203,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     gotoContent() {
-        this._router.navigate(['/about']);
-        return false;
+        this._router.navigate(['/about']);        
+        return true;
      }
     showMenuTrigger() {
         // user-click-open

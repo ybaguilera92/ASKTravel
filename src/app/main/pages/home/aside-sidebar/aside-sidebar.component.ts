@@ -94,13 +94,16 @@ export class AsideSidebarComponent implements OnInit, AfterViewInit, OnDestroy {
             })
         //error en side bar
         if (!isNullOrEmpty(this.question)) {
-            this.question.user.fileEncode = this.domSanitizer.bypassSecurityTrustUrl("data:image/png;base64, " + this.question.user.fileEncode);
+            this.photo_url(this.question.user.fileEncode);
+           // this.question.user.fileEncode = this.domSanitizer.bypassSecurityTrustUrl("data:image/png;base64, " + this.question.user.fileEncode);
         }
         // if (!isNullOrEmpty(this.question.user.fileEncode)) {
         //     this.question.user.fileEncode = this.domSanitizer.bypassSecurityTrustUrl("data:image/png;base64, " + this.question.user.fileEncode);
         // }
     }
-
+    photo_url(data: string) {
+        this.question.user.fileEncode = this.domSanitizer.bypassSecurityTrustUrl("data:image/png;base64, " + data);
+    }
     ngAfterViewInit(){
         let observer = new IntersectionObserver(entries => {
             if (entries[0].boundingClientRect['y'] < 0) {

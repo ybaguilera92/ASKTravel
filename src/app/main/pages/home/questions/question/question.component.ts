@@ -77,6 +77,7 @@ export class QuestionComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+       
         this.questionService.onQuestionChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(question => {

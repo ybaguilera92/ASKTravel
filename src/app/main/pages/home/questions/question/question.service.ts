@@ -80,8 +80,9 @@ export class QuestionService implements Resolve<any>
                 return this._httpClient.get(`${this.enviroment.getEnviroment().apiUrl}/questions/`+id)
                     .subscribe((response: any) => {
                         this.question = response;
-                        if(!isNullOrEmpty(this.question.fileEncode)){
-                            this.question.fileEncode = this.domSanitizer.bypassSecurityTrustUrl("data:image/png;base64, "+ this.question.fileEncode);
+                        if (!isNullOrEmpty(this.question.fileEncode)) {
+                            this.photo_url(this.question.fileEncode);
+                           // this.question.fileEncode = this.domSanitizer.bypassSecurityTrustUrl("data:image/jpeg;base64, "+ this.question.fileEncode);
                         }                      
                         if(isNullOrEmpty(this.homeService.dataNavigation)){
                             this.commonService.getQuestionsByParams(new HttpParams()
@@ -107,7 +108,10 @@ export class QuestionService implements Resolve<any>
             }
         });
     }
+    photo_url(data: string) {
+        this.question.fileEncode = this.domSanitizer.bypassSecurityTrustUrl("data:image/jpeg;base64, " +data);
 
+    }
     /**
      * Update Answer
      */

@@ -166,11 +166,11 @@ export class FuseQuestionDialogComponent implements OnInit, OnDestroy {
     }
 
     makeQuestion() {
-        console.log("hola");
+       // console.log("hola");
         let params = this.form.getRawValue();
         params.statusCat = this.status[0];
         params.follower = this.currentUser.id;
-        console.log(params);
+        //console.log(params);
         this.commonService.makeQuestion(params)
     }
 

@@ -124,7 +124,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
         });
         this._route.queryParams.subscribe(params => {
-            console.log(this.currentUser);
+           // console.log(this.currentUser);
             if (!isNullOrEmpty(params['type']) && params['type'] == 'edit') {
                 this.mode = 'EDIT';
                 if (!isNullOrEmpty(this.currentUser)) {
@@ -137,6 +137,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
                     this.userForm = this.createForm();
                     this.emailForm = this.createFormEmail();
                     this.passwordForm = this.createFormPassword();
+                    sessionStorage.removeItem('content');
+                }
+            } else if (!isNullOrEmpty(params['type']) && params['type'] == 'view') { 
+                if (!sessionStorage.getItem('content')) {
+                    window.location.reload();
+                    sessionStorage.setItem('content', 'true');
                 }
             }
         });
@@ -434,14 +440,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     changeMode(mode) {
-        this.mode = mode;
-
-        if (this.mode == 'EDIT') {
-            this.userForm = this.createForm();
-            this.emailForm = this.createFormEmail();
-            this.passwordForm = this.createFormPassword();
-        }
-
+        this.mode = mode;     
         return false;
     }
 
