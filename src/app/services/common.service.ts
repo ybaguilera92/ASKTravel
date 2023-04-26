@@ -204,8 +204,9 @@ export class CommonService {
                 }
             });
         }
+        //console.log(params);
         if (handle!.phrase !== "") {
-            return this._httpClient.get<any[]>(`${this.environment.getEnviroment().apiUrl}/questions/`, {params});
+            return this._httpClient.get<any[]>(`${this.environment.getEnviroment().apiUrl}/questions/searchQuestion`, {params});
         }
     }
     /**

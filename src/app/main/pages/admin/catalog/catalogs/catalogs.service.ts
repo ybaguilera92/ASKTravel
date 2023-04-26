@@ -99,7 +99,7 @@ export class CatalogsService extends BaseService<Catalog> implements Resolve<any
         }
         this._fuseSplashScreenService.hide();
         Swal.fire({
-            title: 'Estimado Usuario',
+            title: 'Error',
             text: message,
             icon: 'error'
         });

@@ -8,6 +8,8 @@ import { FuseNavigationService } from '@fuse/components/navigation/navigation.se
 import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import {TokenStorageService} from "../../../../../services/token.service";
+import { isNullOrEmpty } from 'app/fuse-config';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector     : 'navbar-vertical-style-1',
@@ -21,7 +23,8 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
     navigation: any;
     user: any;
     hide: boolean;
-
+    image: any;
+    existeImage= false;
     // Private
     private _fusePerfectScrollbar: FusePerfectScrollbarDirective;
     private _unsubscribeAll: Subject<any>;
@@ -39,7 +42,8 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
         private _fuseNavigationService: FuseNavigationService,
         private _fuseSidebarService: FuseSidebarService,
         private _router: Router,
-        private tokenStorage: TokenStorageService
+        private tokenStorage: TokenStorageService,
+        private _domSanitizer: DomSanitizer
     )
     {
         // Set the private defaults
@@ -107,7 +111,12 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
                     }
                 }
             );
-
+        if (!isNullOrEmpty(this.user.fileEncode)) {    
+            // this.image = this._domSanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'
+            //     + this.user.fileEncode);    
+            this.existeImage = true;
+           // console.log(this.image)
+        }
         // Subscribe to the config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))

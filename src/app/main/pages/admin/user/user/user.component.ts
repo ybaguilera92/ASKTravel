@@ -130,7 +130,9 @@ export class UserComponent implements OnInit, OnDestroy {
      */
     createForm(): FormGroup {
         if (!this.editing) {
+            console.log('hola')
             return this._formBuilder.group({
+                username: ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(20)])],
                 name: ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(20)])],
                 lastName: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50)])],
                 password: ['', Validators.compose([Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')])],
@@ -144,6 +146,7 @@ export class UserComponent implements OnInit, OnDestroy {
                 name: [this.user.name, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(20)])],
                 username: [this.user.username, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(20)])],
                 lastName: [this.user.lastName, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(50)])],
+                password: ['', Validators.compose([Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')])],
                 email: [this.user.email, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(50)])],
                 enabled: [this.user.enabled, Validators.compose([Validators.required])],
                 rol: [this.user.roles.length > 0 ? this.user.roles[0].name : {}, Validators.compose([Validators.required])],
@@ -157,9 +160,11 @@ export class UserComponent implements OnInit, OnDestroy {
     saveUser(): void {
 
         const data = this.userForm.getRawValue();
+        
         this.userService.saveUser({
             "id": data.id,
             "userName": data.username,
+            "username": data.username,
             "name": data.name,
             "lastName": data.lastName,
             "email": data.email,
@@ -188,9 +193,11 @@ export class UserComponent implements OnInit, OnDestroy {
      */
     addUser(): void {
         const data = this.userForm.getRawValue();
-
+        console.log(data.rol)
         this.userService.addUser({
             "password": data.password,
+            "userName": data.username,
+            "username": data.username,
             "name": data.name,
             "lastName": data.lastName,
             "email": data.email,

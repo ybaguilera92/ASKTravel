@@ -128,11 +128,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             if (!isNullOrEmpty(params['type']) && params['type'] == 'edit') {
                 this.mode = 'EDIT';
                 if (!isNullOrEmpty(this.currentUser)) {
-
-                    //    this.aux = this.userService.getUser2(this.currentUser.id);
-                    //    console.log(this.onUserChanged);
-                    //    console.log('hola')
-                    // console.log(this.currentUser);
+                    this.type = this.PROFILETABS[0].ARG;
                     this.user = this.currentUser;
                     this.userForm = this.createForm();
                     this.emailForm = this.createFormEmail();
@@ -156,9 +152,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     createForm(): FormGroup {
         return this._formBuilder.group({
             id: [this.user.id],
-            name: [this.user.name, Validators.compose([Validators.required])],
-            username: [this.user.username, Validators.compose([Validators.required])],
-            lastName: [this.user.lastName, Validators.compose([Validators.required])],
+            name: [this.user.name, Validators.compose([Validators.required, Validators.pattern('^[A-ZÑa-zñáéíóúÁÉÍÓÚ° ]{3,50}')])],           
+            lastName: [this.user.lastName, Validators.compose([Validators.required, Validators.pattern('^[A-ZÑa-zñáéíóúÁÉÍÓÚ° ]{3,50}')])],
             'file': [''],
             'fileUp': [''],
 
@@ -169,25 +164,28 @@ export class ProfileComponent implements OnInit, OnDestroy {
     createFormPassword(): FormGroup {
         return this._formBuilder.group({
             id: [this.user.id],
-            password: [this.user.email, Validators.compose([Validators.required])],
-            rpassword: [this.user.email, Validators.compose([Validators.required])],
+            password: [null, Validators.compose([Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{5,60}[^'\s]/)])],
+            rpassword: [null, Validators.compose([Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{5,60}[^'\s]/)])],
         });
+    }
+    get f() {
+        return this.passwordForm.controls;
     }
     createFormEmail(): FormGroup {
         return this._formBuilder.group({
             id: [this.user.id],
-            email: [this.user.email, Validators.compose([Validators.required, Validators.email])],
+            email: [this.user.email, Validators.compose([Validators.required, Validators.email ])],
         });
     }
     actionTab(type) {
         this.type = type;
         switch (type) {
             case this.USERTABS[1].ARG:
-            case this.USERTABS[4].ARG:
+            case this.USERTABS[2].ARG:
                 this.homeService.goTo(this.type, true);
                 break;
-            case this.USERTABS[2].ARG:
             case this.USERTABS[3].ARG:
+            case this.USERTABS[4].ARG:
                 this.homeService.goToAnswers(this.type, true);
                 break;
         }
@@ -217,12 +215,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 } else {
                     this.verificar = false;
                     this.imagenPrevia = "./assets/img/cancel.png";
-                    //console.log(this.imagenPrevia);
                 }
-                //  console.log(file.target.files[0]);
                 this.valor_button = file.target.files[0].name;
-                //   this.userForm.controls['file'].setValue(file.target.files[0]);
-                // this.userForm.controls['fileUp'].setValue(file.target.files[0]);
             }
 
             this.fileInput.nativeElement.value = "";
@@ -339,8 +333,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         // console.log(data);
         const userImage = {
             "id": data.id,
-            "userName": data.username,
-            "username": data.username,
+            "userName": this.user.username,
+            "username": this.user.username,
             "name": data.name,
             "lastName": data.lastName,
             "email": this.user.email,
@@ -353,8 +347,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
             console.log('hola');
             const userSave = {
                 "id": data.id,
-                "userName": data.username,
-                "username": data.username,
+                "userName": this.user.username,
+                "username": this.user.username,
                 "name": data.name,
                 "lastName": data.lastName,
                 "email": this.user.email,
@@ -388,18 +382,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
                         }
                     });
         }
-
-        //  this.userService.updateImage(userImage);
-
-        // this._matSnackBar.open('Usuario actualizado', 'OK', {
-        //     verticalPosition: 'top',
-        //     duration: 2000
-        // });
-
-
-      
-
-        // console.log(data);
     }
     saveImage(data: any, userImage: any) { 
         this.userService.getById(userImage.id).subscribe({

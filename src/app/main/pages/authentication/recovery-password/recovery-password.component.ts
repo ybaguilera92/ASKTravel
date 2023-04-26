@@ -5,20 +5,18 @@ import { fuseAnimations } from '@fuse/animations';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {AuthenticationService} from "../../../../services/authentication.service";
-import {FuseConfirmDialogComponent} from "../../../../../@fuse/components/confirm-dialog/confirm-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
 import {DialogOption, FuseDialogService} from "../../../../../@fuse/services/dialog.service";
 import {isNullOrEmpty} from "../../../../fuse-config";
 import { Console } from 'console';
 
 @Component({
-    selector     : 'account-activation',
-    templateUrl  : './account-activation.component.html',
-    styleUrls    : ['./account-activation.component.scss'],
+    selector     : 'recovery-password',
+    templateUrl: './recovery-password.component.html',
+    styleUrls: ['./recovery-password.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class AccountActivationComponent implements OnInit, OnDestroy {
+export class RecoveryPasswordComponent implements OnInit, OnDestroy {
 
     private subscription: Subscription;
 
@@ -58,10 +56,10 @@ export class AccountActivationComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.subscription = this._route.queryParams.subscribe(params => {
             if (!isNullOrEmpty(params['code'])) {                
-                this._authenticationService.activate(params['code']).subscribe( res => {
+                this._authenticationService.recoverPassword(params['code']).subscribe( res => {
                         let options: DialogOption = {
-                            title :'Atención',
-                            message : 'Registro de usuario satisfactorio',
+                            title :'Atención:',
+                            message: 'Dirección de correo electrónico confirmada. Revise su correo electrónico para obtener su nueva contraseña.',
                             buttonText : {
                                 ok: {
                                     title: 'Iniciar sesión',
@@ -81,7 +79,7 @@ export class AccountActivationComponent implements OnInit, OnDestroy {
 
                     });
             } else {
-                this._router.navigate(['/auth/activate']);
+                this._router.navigate(['auth/recovery-password']);
             }
 
         });

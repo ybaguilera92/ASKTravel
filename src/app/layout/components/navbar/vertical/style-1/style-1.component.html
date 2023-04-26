@@ -1,8 +1,8 @@
 <div class="navbar-top" [ngClass]="fuseConfig.layout.navbar.secondaryBackground">
 
     <div class="logo">
-        <img class="logo-icon logo-folded" src="assets/images/logos/icon-white.png">
-        <img class="logo-icon logo-unfolded" src="assets/images/logos/logo-new-white.png">
+        <img class="logo-icon logo-folded" src="./assets/images/logos/icon-white.png">
+        <img class="logo-icon logo-unfolded" src="./assets/images/logos/logo-new-white.png">
     </div>
 
     <div class="buttons">
@@ -22,8 +22,11 @@
 
         <div class="h3 username">{{ user.fullName }}</div>
         <div class="h5 email hint-text mt-8">{{user.email}}</div>
-        <div class="avatar-container" [ngClass]="fuseConfig.layout.navbar.primaryBackground">
-            <img class="avatar" src="assets/images/avatars/Velazquez.jpg">
+        <div *ngIf="!existeImage"  class="avatar-container" [ngClass]="fuseConfig.layout.navbar.primaryBackground">
+            <img  class="avatar" src="./assets/images/user2.png">
+        </div>
+        <div *ngIf="existeImage" class="avatar-container" [ngClass]="fuseConfig.layout.navbar.primaryBackground">
+            <img class="avatar" src="data:image/png;base64,{{user.fileEncode}}">
         </div>
 
     </div>

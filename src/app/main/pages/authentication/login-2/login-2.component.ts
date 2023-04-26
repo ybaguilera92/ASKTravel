@@ -12,6 +12,9 @@ import { first } from "rxjs/operators";
 import { Register2Component } from "../register-2/register-2.component";
 import Swal from "sweetalert2";
 import { HttpErrorResponse } from "@angular/common/http";
+import { ForgotPassword2Component } from '../forgot-password-2/forgot-password-2.component';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
     selector: 'login-2',
@@ -89,7 +92,7 @@ export class Login2Component implements OnInit {
                 data => {                  
                     if (data.accessToken == "Usuario inactivo") {
                         Swal.fire({
-                            title: 'Estimado usuario',
+                            title: 'Atención:',
                             text: "Su cuenta de usuario aún se encuentra inactiva, revise su correo y actívela haciendo click en el enlace enviado",
                             icon: 'info'
                         })
@@ -117,7 +120,7 @@ export class Login2Component implements OnInit {
                     }
                     this._fuseSplashScreenService.hide();
                     Swal.fire({
-                        title: 'Estimado Usuario',
+                        title: 'Error:',
                         text: message,
                         icon: 'error'
                     });
@@ -127,6 +130,11 @@ export class Login2Component implements OnInit {
 
     goToSignIn() {
         this._dialog.buildDialogStyle(Register2Component, {
+            width: '850px'
+        });
+    }
+    goToRecoveryPassword() {
+        this._dialog.buildDialogStyle(ForgotPassword2Component, {
             width: '850px'
         });
     }

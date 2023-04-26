@@ -54,10 +54,10 @@
                                 </li>
                                 <li><a [routerLink]="['/profile',currentUser.id]" [queryParams]="{type: 'edit'}"
                                         href="#"><i class="icon-pencil"></i>Editar Perfil</a></li>
-                                 <li><a routerLink="/admin/users"
-                                         href="#"><i class="icon-menu"></i>Menú Administración</a></li>
+                                 <li *ngIf="isAdmin"><a (click)="admin()"
+                                         ><i class="icon-menu"></i>Menú Administración</a></li>
 
-                                <li><a (click)="logout()"><i class="icon-logout"></i>Desconectarse</a></li>
+                                <li><a (click)="logout()"><i class="icon-logout"></i>Cerrar Sesión</a></li>
                             </ul>
                         </mat-menu>
 
@@ -68,9 +68,9 @@
                 <h2 class="screen-reader-text site_logo">Viajando Preguntas</h2>
                 <a class="logo float_l logo-img" [routerLink]="'/'" title="Viajero Pregunta">
                     <img title="Viajero Pregunta" class="default_screen" alt="Viajero Pregunta Logo"
-                        src="assets/images/logos/logo-new-white.png">
+                        src="./assets/images/logos/logo-new-white.png">
                     <img title="Viajero Pregunta" class="retina_screen" alt="Viajero Pregunta Logo"
-                        src="assets/images/logos/logo-new-white.png">
+                        src="./assets/images/logos/logo-new-white.png">
                 </a>
                 <div class="mid-header float_l">
                     <div class="header-search float_r">
@@ -321,16 +321,17 @@
                                 <div class="user-head-area">
                                     <div *ngIf="imagenExiste" class="author-image author__avatar author-image-84"><a
                                             href="#"><span
-                                                class="author-image-span"><img
+                                                ><img
                                                     class="avatar avatar-84 rounded-circle photo" alt="" title=""
                                                     width="84" height="84" [src]="image"></span></a>
                                     </div>
                                     <div *ngIf="!imagenExiste" class="author-image author__avatar author-image-84"><a
                                             href="#"><span
-                                                class="author-image-span"><img
+                                               ><img
                                                     class="avatar avatar-84 rounded-circle photo" alt="" title=""
                                                     width="84" height="84" src="./assets/images/user2.png"></span></a>
                                     </div>
+                                  
                                 </div>
                                 <div class="user-content">
                                     <div class="user-inner">

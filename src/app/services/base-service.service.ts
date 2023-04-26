@@ -4,9 +4,9 @@ import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import {FuseError} from "../../@fuse/types/fuse-error";
 
-@Injectable({
-    providedIn: 'root'
-})
+// @Injectable({
+//     providedIn: 'root'
+// })
 export class BaseService<T> {
 
     constructor(

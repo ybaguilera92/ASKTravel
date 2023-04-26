@@ -93,7 +93,7 @@
                                                                      title="mjabascal@sitrans.transnet.cu"
                                                                      width="20"
                                                                      height="20"
-                                                                     src="/assets/images/profile/user.png">
+                                                                     src="./assets/images/profile/user.png">
                                                                 </a>
                                                             </span>
                                         <div>
@@ -107,7 +107,7 @@
                                             </h3>
                                             <ul class="widget-post-meta question-item__meta list-unstyled mb-0 d-flex align-items-center">
                                                 <li><a class="post-meta-comment"
-                                                       href="http://localhost/ask-travel/question/how-do-native-speakers-tell-im-foreign-based-on-my-english-alone/#comments"><i
+                                                      ><i
                                                     class="icon-comment"></i>{{ question.answers.length + ' Respuestas' }}
                                                 </a></li>
                                             </ul>
@@ -129,7 +129,7 @@
                                          alt="{{answer.user.name+ '' +answer.user.lastName}}"
                                          title="{{answer.user.name+ '' +answer.user.lastName}}" width="25" height="25"
                                         
-                                         src="/assets/images/profile/user.png"> 
+                                         src="./assets/images/profile/user.png"> 
                                         <img *ngIf="answer.user.fileEncode"
                                             class="avatar avatar-25 rounded-circle photo"
                                             alt="{{answer.user.name+ '' +answer.user.lastName}}"
@@ -141,7 +141,7 @@
                                                 class="question-title">
                                                 <a [routerLink]="'/question/'+answer.parent" [fragment]="'answer-'+answer.id" [innerHTML]="(answer.description.length > 50 ) ? (answer.description | slice:0:50)+'..':(answer.description)"
                                                 class="notification__question notification__question-dark"
-                                                href="http://localhost/ask-travel/question/why-are-the-british-confused-about-us-calling-bread-rolls-biscuits-when-they-call-bread-rolls-puddings/#comment-72"></a></span>
+                                               ></a></span>
                                             <span
                                                 class="notifications-date notification__date d-block mt-2">{{answer.createdDate  | date:'medium'}}</span>
                                         </div>

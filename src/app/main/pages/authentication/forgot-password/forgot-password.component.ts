@@ -3,6 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
+import { AuthenticationService } from 'app/services/authentication.service';
+import { Router } from '@angular/router';
+import { FuseDialogService } from '@fuse/services/dialog.service';
+import { FuseSplashScreenService } from '@fuse/services/splash-screen.service';
+import { TokenStorageService } from 'app/services/token.service';
+import Swal from 'sweetalert2';
+import { first } from 'rxjs/operators';
 
 @Component({
     selector     : 'forgot-password',
@@ -14,7 +21,7 @@ import { fuseAnimations } from '@fuse/animations';
 export class ForgotPasswordComponent implements OnInit
 {
     forgotPasswordForm: FormGroup;
-
+    error: any;
     /**
      * Constructor
      *
@@ -23,7 +30,12 @@ export class ForgotPasswordComponent implements OnInit
      */
     constructor(
         private _fuseConfigService: FuseConfigService,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private authenticationService: AuthenticationService,
+        private router: Router,
+        private _dialog: FuseDialogService,
+        private _fuseSplashScreenService: FuseSplashScreenService,
+        private tokenStorage: TokenStorageService
     )
     {
         // Configure the layout
@@ -58,4 +70,7 @@ export class ForgotPasswordComponent implements OnInit
             email: ['', [Validators.required, Validators.email]]
         });
     }
+    get f() { return this.forgotPasswordForm.controls; }
+
+    
 }

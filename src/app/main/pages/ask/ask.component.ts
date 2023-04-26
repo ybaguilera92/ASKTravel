@@ -138,8 +138,9 @@ export class AskComponent implements OnInit, OnDestroy
                 data => {
                     if((data.data.id)){
                         this._dialog.openDialog({
-                            title :'Estimado usuario',
-                            message : 'Pregunta registrada satisfactoriamente. Recibirás la respuesta a través del correo electrónico registrado.',
+                            title :'Atención',
+                            message: 'Pregunta registrada satisfactoriamente. Recibirás la respuesta a través del correo electrónico registrado.',
+                           
                             buttonText : {
                                 ok: {
                                     title: 'Aceptar',
@@ -155,7 +156,7 @@ export class AskComponent implements OnInit, OnDestroy
                 },
                 error => {
                     this._dialog.openDialog({
-                        title :'Estimado usuario',
+                        title :'Error: ',
                         message : 'Ocurrieron errores, por favor reintenta.',
                         buttonText : {
                             ok: {

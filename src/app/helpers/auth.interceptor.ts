@@ -36,12 +36,12 @@ export class AuthInterceptor implements HttpInterceptor {
         }
 
         return next.handle(authReq).pipe(catchError(error => {
-
-            if (error instanceof HttpErrorResponse && !authReq.url.includes('auth/signin') && error.status === 401) {
+            if (error instanceof HttpErrorResponse && !authReq.url.includes('auth/signin') && error.status === 401) {              
                 return this.handle401Error(authReq, next);
             }
 
             if (error instanceof HttpErrorResponse && !authReq.url.includes('auth/signin') && error.status === 403) {
+                console.log('error1')
                 errorMessage = 'Su tiempo de sesión ha expirado, por favor autentíquese de nuevo';
             }
 
@@ -64,9 +64,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
             if (errorMessage != '')
                 Swal.fire({
-                    title: 'Estimado Usuario',
+                    title: 'Error:',
                     text: errorMessage,
-                    icon: 'info'
+                    icon: 'error'
                 }).then(confirmed =>{
                     if(confirmed && error.status === 403){
                         this._router.navigate(['auth/login']);
@@ -89,7 +89,6 @@ export class AuthInterceptor implements HttpInterceptor {
                 return this.authService.refreshToken(token).pipe(
                     switchMap((token: any) => {
                         this.isRefreshing = false;
-
                         this.tokenService.saveToken(token.accessToken);
                         this.refreshTokenSubject.next(token.accessToken);
 
@@ -97,7 +96,6 @@ export class AuthInterceptor implements HttpInterceptor {
                     }),
                     catchError((err) => {
                         this.isRefreshing = false;
-
                         this.tokenService.signOut();
                         this.authService.setCurrentUserSubject(null);
                         this.authService.setUserLoggedInSubject(false);

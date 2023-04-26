@@ -9,6 +9,7 @@ import { AuthenticationService } from "../../../../services/authentication.servi
 import { FuseSplashScreenService } from "../../../../../@fuse/services/splash-screen.service";
 import { FuseDialogService } from "../../../../../@fuse/services/dialog.service";
 import { Login2Component } from "../login-2/login-2.component";
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'register-2',
@@ -61,12 +62,12 @@ export class Register2Component implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this.registerForm = this._formBuilder.group({
-            name: ['', Validators.required],
-            lastName: ['', Validators.required],
-            username: ['', Validators.required],
+            name: ['', Validators.compose([Validators.required, Validators.pattern('^[A-ZÑa-zñáéíóúÁÉÍÓÚ° ]+$')])],
+            lastName: ['', Validators.compose([Validators.required, Validators.pattern('^[A-ZÑa-zñáéíóúÁÉÍÓÚ° ]+$')])],
+            username: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-z0-9._-]{3,16}$/)])],
             email: ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required],
-            passwordConfirm: ['', [Validators.required, confirmPasswordValidator]],
+            password: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{5,60}[^'\s]/)]],
+            passwordConfirm: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{5,60}[^'\s]/), confirmPasswordValidator]],
             //terms          : ['', [Validators.required]]
         });
 
@@ -90,6 +91,11 @@ export class Register2Component implements OnInit, OnDestroy {
         this.authenticationService.register(this.registerForm.getRawValue())
             .subscribe(
                 data => {
+                    Swal.fire({
+                        title: 'Atención',
+                        text: "Su cuenta de usuario ha sido creada pero se encuentra inactiva, revise su correo y actívela haciendo click en el enlace enviado.",
+                        icon: 'info'
+                    })
                     this.user = data;
                     this.isRegister = true;
                     this._fuseSplashScreenService.hide();

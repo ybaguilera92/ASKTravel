@@ -23,7 +23,7 @@ import {EncryptionService} from "./services/encryption.service";
 import {AuthInterceptor} from "./helpers/auth.interceptor";
 import {AuthGuard} from "./helpers/auth.guard";
 import localeEs from "@angular/common/locales/es";
-import {registerLocaleData} from "@angular/common";
+import {HashLocationStrategy, LocationStrategy, registerLocaleData} from "@angular/common";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {IconSnackBarComponent} from "../@fuse/components/icon-snack-bar/icon-snack-bar.component";
 import { ContentComponent } from './layout/components/content/content.component';
@@ -33,7 +33,7 @@ registerLocaleData(localeEs, "es");
 const appRoutes: Routes = [
     {path: '', loadChildren: './main/pages/pages.module#PagesModule'},
     {
-        path: '**', redirectTo: '/home', pathMatch: 'full'
+        path: '**', redirectTo: '/', pathMatch: 'full'
     },
     {
         path: 'content',component:ContentComponent
@@ -84,7 +84,8 @@ const extraOptions: ExtraOptions = {
         EncryptionService,
         AuthGuard,
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-        {provide: LOCALE_ID, useValue: "es"},
+        { provide: LOCALE_ID, useValue: "es" },
+       // { provide: LocationStrategy, useClass: HashLocationStrategy }
     ],
     entryComponents: [
         IconSnackBarComponent

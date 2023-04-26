@@ -16,6 +16,7 @@ import {AccountActivationModule} from "./authentication/account-activation/accou
 import {SearchClassicModule} from "./search/search-classic.module";
 import {AdminModule} from "./admin/admin.module";
 import { ProfileComponent } from './home/profile/profile.component';
+import { RecoveryPasswordModule } from './authentication/recovery-password/recovery-password.module';
 
 
 @NgModule({
@@ -26,12 +27,14 @@ import { ProfileComponent } from './home/profile/profile.component';
         RegisterModule,
         Register2Module,
         ForgotPasswordModule,
-        ForgotPassword2Module,
+        //ForgotPassword2Module,
         ResetPasswordModule,
         ResetPassword2Module,
         LockModule,
         MailConfirmModule,
         AccountActivationModule,
+        RecoveryPasswordModule,
+        
 
         // Search
         HomeModule,

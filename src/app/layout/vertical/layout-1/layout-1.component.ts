@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
@@ -11,7 +11,7 @@ import {navigation} from 'app/navigation/navigation';
     styleUrls: ['./layout-1.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class VerticalLayout1Component implements OnInit, OnDestroy {
+export class VerticalLayout1Component implements OnInit, OnDestroy, AfterViewInit {
     fuseConfig: any;
     navigation: any;
     private scrollOffset: number = 70;
@@ -44,12 +44,18 @@ export class VerticalLayout1Component implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         // Subscribe to config changes
+        this._fuseConfigService.config          
+            .subscribe((config) => {
+                this.fuseConfig = config;
+            });
+
+    }
+    ngAfterViewInit() {
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
                 this.fuseConfig = config;
             });
-
     }
 
     /**

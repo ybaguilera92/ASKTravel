@@ -95,7 +95,8 @@ export class HomeComponent implements OnInit, OnDestroy
         this._authenticationService.currentUser
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((user) => {
-            this.currentUser = !isNullOrEmpty(user) ? user : !isNullOrEmpty(this.tokenStorage.getUser()) ? this.tokenStorage.getUser() : null;
+                this.currentUser = !isNullOrEmpty(user) ? user : !isNullOrEmpty(this.tokenStorage.getUser()) ? this.tokenStorage.getUser() : null;
+                console.log(this.currentUser);
         });
     }
 

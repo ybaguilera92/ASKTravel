@@ -66,10 +66,17 @@ export class AuthenticationService {
                 return user;
             }));
     }
+    recovery(body: any) {
+        body.siteURL = `${environment.appUrl}/auth/recovery-password`;
+        return this.http.post<any>(`${environment.apiUrl}/auth/recoveryPassword`, body)      
+            .pipe(map(user => {             
+            }));
+    }
 
     register(body: any) {
+        
         body.password_confirmation = body.passwordConfirm;
-        body.siteURL = 'http://localhost:4200/auth/activate';
+        body.siteURL = `${environment.appUrl}/auth/activate`;
         return this.http.post<any>(`${environment.apiUrl}/auth/signup`, body)
             .pipe(map(user => {
                 return user;
@@ -83,7 +90,13 @@ export class AuthenticationService {
                 return user;
             }));
     }
-
+    recoverPassword(token: any) {
+        let params = new HttpParams().set("code", token); //Create new HttpParams       
+        return this.http.get<any>(`${environment.apiUrl}/auth/verifyPassword`, { params })
+            .pipe(map(user => {                
+                return user;
+            }));
+    }
     logout() {      
         
         this._fuseSplashScreenService.show();
@@ -91,7 +104,7 @@ export class AuthenticationService {
         this.currentUserSubject.next(null);
         this.isUserLoggedInSubject.next(false);
         let options: DialogOption = {
-            title: 'Estimado usuario',
+            title: 'Información:',
             message: "Sesión cerrada satisfactoriamente. Puede seguir consultando preguntas en el sistema.",
         }       
         this._fuseSplashScreenService.hide();

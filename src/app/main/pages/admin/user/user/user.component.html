@@ -86,7 +86,7 @@
                                     </mat-form-field>
                                 </div>
                                 <div fxLayout="row" fxLayoutAlign="space-between">
-                                    <mat-form-field *ngIf="editing" appearance="outline" floatLabel="always" fxFlex="45">
+                                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="45">
                                         <mat-label>Usuario</mat-label>
                                         <input matInput placeholder="Usuario"
                                                name="username"
@@ -101,18 +101,7 @@
                                             La cantidad de carecteres máxima es 10.
                                         </mat-error>
                                     </mat-form-field>
-                                    <mat-form-field *ngIf="!editing" appearance="outline" floatLabel="always" fxFlex="45">
-                                        <mat-label>Contraseña</mat-label>
-                                        <input matInput type="password" placeholder="Contraseña"
-                                               name="password"
-                                               formControlName="password">
-                                        <mat-error *ngIf="userForm.get('password').hasError('required')">
-                                            La contraseña del usuario es requerida
-                                        </mat-error>
-                                        <mat-error *ngIf="userForm.get('password').hasError('pattern')">
-                                            Contraseña débil
-                                        </mat-error>
-                                    </mat-form-field>
+                                  
                                     <mat-form-field appearance="outline" floatLabel="always" fxFlex="45">
                                         <mat-label>Correo electrónico</mat-label>
                                         <input matInput placeholder="Correo electrónico"
@@ -155,6 +144,22 @@
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
+                                 <div fxLayout="row" fxLayoutAlign="space-between">
+                                     
+                                     <mat-form-field appearance="outline" floatLabel="always"
+                                         fxFlex="45">
+                                         <mat-label>Contraseña</mat-label>
+                                         <input matInput type="password" placeholder="Contraseña" name="password"
+                                             formControlName="password">
+                                         <mat-error *ngIf="userForm.get('password').hasError('required')">
+                                             La contraseña del usuario es requerida
+                                         </mat-error>
+                                         <mat-error *ngIf="userForm.get('password').hasError('pattern')">
+                                             Contraseña débil
+                                         </mat-error>
+                                     </mat-form-field>
+                                    
+                                 </div>
                             </div>
                 </form>
 

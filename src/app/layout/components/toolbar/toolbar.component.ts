@@ -52,7 +52,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // image ='./assets/images/user2.png';
     image: any;
     imagenExiste = false;
-
+    isAdmin = false;
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -155,6 +155,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.currentUser = !isNullOrEmpty(user) ? user : !isNullOrEmpty(this.tokenStorage.getUser()) ? this.tokenStorage.getUser() : null;
             //  console.log(this.currentUser);          
             if (this.currentUser != null) {
+                if (this.currentUser.roles[0] == 'ROLE_ADMIN') { 
+                    this.isAdmin = true;
+                }
                 this.imagenExiste = false;
                 //   console.log(this.currentUser.fileEncode);
                 if (!isNullOrEmpty(this.currentUser.fileEncode)) {
@@ -186,9 +189,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 }
                 ));
     }
-    inicio() {
-        console.log('hola');
-        this._router.navigate(['/home']);
+    admin() {      
+        sessionStorage.setItem('inicio', 'inicio');
+        this._router.navigate(['/admin/users']);
     }
     /**
      * Create form
@@ -266,7 +269,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         } else {
             let options: DialogOption = {
-                title: 'Estimado usuario',
+                title: 'Atención',
                 message: 'Debes iniciar sesión para ver esta página',
                 buttonText: {
                     ok: {

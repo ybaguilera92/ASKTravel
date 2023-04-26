@@ -500,7 +500,7 @@ export class TodoService implements Resolve<any>
                     if(response){
                         this._fuseSplashScreenService.hide();
                         Swal.fire({
-                            title: 'Estimado Usuario',
+                            title: 'Información: ',
                             text: 'Actualización satisfactoria',
                             icon: 'success'
                         }).then(confirmed => {
@@ -516,7 +516,7 @@ export class TodoService implements Resolve<any>
                 error => {
                     this._fuseSplashScreenService.hide();
                     Swal.fire({
-                        title: 'Estimado Usuario',
+                        title: 'Error:',
                         text: 'Ha ocurrido un error, inténtelo más tarde',
                         icon: 'error'
                     }).then(confirmed => {
@@ -552,7 +552,7 @@ export class TodoService implements Resolve<any>
                         if(response){
                             this._fuseSplashScreenService.hide();
                             Swal.fire({
-                                title: 'Estimado Usuario',
+                                title: 'Información: ',
                                 text: 'Operación satisfactoria',
                                 icon: 'success'
                             }).then(confirmed => {
@@ -568,7 +568,7 @@ export class TodoService implements Resolve<any>
                     error => {
                         this._fuseSplashScreenService.hide();
                         Swal.fire({
-                            title: 'Estimado Usuario',
+                            title: 'Error:',
                             text: 'Ha ocurrido un error, inténtelo más tarde',
                             icon: 'error'
                         }).then(confirmed => {

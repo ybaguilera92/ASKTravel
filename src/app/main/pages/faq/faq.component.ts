@@ -114,7 +114,7 @@ export class FaqComponent implements OnInit, OnDestroy
         }
         else {
             let options: DialogOption = {
-                title :'Estimado usuario',
+                title :'ATención: ',
                 message : 'Debes iniciar sesión para ver esta página',
                 buttonText : {
                     ok: {

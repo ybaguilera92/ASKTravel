@@ -71,9 +71,9 @@ export class UsersComponent implements OnInit,  OnDestroy {
     
     ngOnInit(): void
     {
-        if (!sessionStorage.getItem('users')) {
+        if (sessionStorage.getItem('inicio') == 'inicio') {           
             window.location.reload();
-            sessionStorage.setItem('users', 'true');
+            sessionStorage.removeItem('inicio');
         }
        
         this.usersService.onUsersChanged.subscribe(options => {

@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
-
+        console.log(this.f.username.value)
         // stop here if form is invalid
         if (this.loginForm.invalid) {
             return;
@@ -100,33 +100,43 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe(
-                data => {                  
+                data => {
                     if (data.accessToken == "Usuario inactivo") {
                         Swal.fire({
-                            title: 'Estimado usuario',
+                            title: 'Atención:',
                             text: "Su cuenta de usuario aún se encuentra inactiva, revise su correo y actívela haciendo click en el enlace enviado",
                             icon: 'info'
                         })
                         this._fuseSplashScreenService.hide();
-                    } else {
+                    } else {                       
                         this.tokenStorage.saveToken(data.accessToken);
                         this.tokenStorage.saveRefreshToken(data.refreshToken);
                         this.tokenStorage.saveUser(data);
-                       // console.log(data);
                         this._fuseSplashScreenService.hide();
-                        if (data.roles.indexOf('ROLE_ADMIN') > -1) {
-                            if (!isNullOrEmpty(this.returnUrl)) {
-                                this.router.navigate([this.returnUrl]);
-                            } else {
-                                this.router.navigate(['/admin/questions']);
-                            }
-                        } else {
-                            this.router.navigate(['/home']);
-                        }
+                        this._dialog.close();
+                        this.router.navigate(['/']);
+                        //   window.location.reload();
+                        // console.log(this.tokenStorage.getUser());
                     }
                 },
                 error => {
+                    this.error = error;
+                    let message = '';
+                    switch (this.error.error.type) {
+                        case 'BadCredentialsException':
+                            message = 'Credenciales inválidas';
+                            break;
+                        case 'error':
+                            message = 'Ha ocurrido un error inesperado. Verifíque su conexión o contácte a nuestro servicio de asistencia técnica';
+                            break
+                    }
                     this._fuseSplashScreenService.hide();
+                    Swal.fire({
+                        title: 'Error:',
+                        text: message,
+                        icon: 'error'
+                    });
                 });
+
     }
 }

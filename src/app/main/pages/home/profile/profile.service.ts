@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import {EnviromentsService} from "../../../../services/enviroments.service";
+import { EnviromentsService } from "../../../../services/enviroments.service";
 import { BaseService } from 'app/services/base-service.service';
 
 
@@ -14,31 +14,31 @@ export class ProfileService extends BaseService<any> implements Resolve<any>
     onUserChanged: BehaviorSubject<any>;
     readonly USERTABS = [
 
-            {
-                ARG: 'ABOUT',
-                DESC: 'Actividad',
-            },
+        {
+            ARG: 'ABOUT',
+            DESC: 'Actividad',
+        },
 
-            {
-                ARG: 'PROFILE_QUESTION',
-                DESC: 'Preguntas',
-            },
+        {
+            ARG: 'PROFILE_QUESTION',
+            DESC: 'Preguntas',
+        },
+        {
+            ARG: 'PROFILE_PENDING_QUESTION',
+            DESC: 'Preguntas pendientes',
+        },
 
-           {
-                ARG: 'PROFILE_ANSWERS',
-                DESC: 'Respuestas',
-            },
+        {
+            ARG: 'PROFILE_ANSWERS',
+            DESC: 'Respuestas',
+        },
 
-            {
-                ARG: 'PROFILE_BEST_ANSWERS',
-                DESC: 'Mejores respuestas',
-            },
-
-            {
-                ARG: 'PROFILE_PENDING_QUESTION',
-                DESC: 'Preguntas pendientes',
-            }
-        ];
+        {
+            ARG: 'PROFILE_BEST_ANSWERS',
+            DESC: 'Mejores respuestas',
+        }       
+       
+    ];
 
     readonly PROFILETABS = [
 
@@ -64,12 +64,11 @@ export class ProfileService extends BaseService<any> implements Resolve<any>
      */
     constructor(
         private _httpClient: HttpClient,
-        private _enviroment: EnviromentsService)
-    {
+        private _enviroment: EnviromentsService) {
         super(_httpClient, _enviroment.getEnviroment().apiUrl, 'users');
         // Set the defaults
         this.onUserChanged = new BehaviorSubject({});
-}
+    }
 
     /**
      * Resolver
@@ -78,8 +77,7 @@ export class ProfileService extends BaseService<any> implements Resolve<any>
      * @param {RouterStateSnapshot} state
      * @returns {Observable<any> | Promise<any> | any}
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any>
-    {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
         return this._httpClient.get(`${this._enviroment.getEnviroment().apiUrl}/users/${route.params['id']}/profile`)
     }
     saveUser(params) {

@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { Login2Component } from 'app/main/pages/authentication/login-2/login-2.component';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+import { ForgotPassword2Module } from '../forgot-password-2/forgot-password-2.module';
 
 const routes = [
     {
@@ -29,9 +31,11 @@ const routes = [
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
+        ForgotPassword2Module,
 
         FuseSharedModule
     ]
+   
 })
 export class Login2Module
 {

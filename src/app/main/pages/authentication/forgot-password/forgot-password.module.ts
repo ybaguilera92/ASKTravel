@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { ForgotPasswordComponent } from 'app/main/pages/authentication/forgot-password/forgot-password.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const routes = [
     {
@@ -28,7 +29,8 @@ const routes = [
         MatIconModule,
         MatInputModule,
 
-        FuseSharedModule
+        FuseSharedModule,
+        MatCheckboxModule,
     ]
 })
 export class ForgotPasswordModule

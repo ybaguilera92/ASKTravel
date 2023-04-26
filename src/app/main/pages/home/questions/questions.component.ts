@@ -67,8 +67,7 @@ export class QuestionsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        window.location.reload();
-        console.log('hola');
+        
         this.data$ = this.homeService.data$
 
         this.type = this.homeService.NAVIGATION.RECENT_QUESTIONS;
